@@ -1,0 +1,2 @@
+JDK 설치
+Eclipse 설치
