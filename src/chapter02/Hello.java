@@ -7,6 +7,6 @@ public class Hello {
 		System.out.println("Welcome to JAVA!!");
 		//Hello가 출력되는 실행문
 		System.out.println("Hello");
+		
 	}
-	
 }
