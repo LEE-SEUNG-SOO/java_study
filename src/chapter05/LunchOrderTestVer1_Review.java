@@ -51,40 +51,55 @@ public class LunchOrderTestVer1_Review {
 				System.out.println("메뉴 준비중입니다.");
 			}
 		} else {
+			// 정수 이외의 값을 입력했을 경우.
 			System.out.println("잘못된 입력입니다. 다시 선택해주세요.");
 		}
 
 		// 2. 주문 메뉴 결제
 		if(menuPrice != 0) {
+			// 결제 진행
 			System.out.print("결제 하실 금액은 " + menuPrice + "원 입니다. 결제를 진행해주세요. : ");
 			
+			// 입력값 체크(정수형 확인)
 			if(scan.hasNextInt()) {
-				charge += scan.nextInt();
+				charge = scan.nextInt();
+				// 입력한 금액이 메뉴가격보다 클경우
 				if(charge >= menuPrice) {
+					// 잔돈 = 입력 금액 - 메뉴 가격 
 					change = charge - menuPrice;
 				} else {
+					// 입력 금액 < 메뉴 가격 경우 
 					System.out.println("금액이 부족합니다. 다시 결제해주세요.");
 					System.out.println("현재 금액 : " + charge + ", 부족한 금액 : " + (menuPrice - charge));
 					System.out.print("금액 입력 : ");
 					
+					// 입력값 체크(정수형 확인)
 					if(scan.hasNextInt()) {
+						// 입력 금액 누적
 						charge += scan.nextInt();
 						
+						// 누적 입력 금액 >= 메뉴가격 
 						if(charge >= menuPrice) {
+							// 잔돈 = 누적 입력 금액 - 메뉴 가격 
 							change = charge - menuPrice;
 						}
 					} else {
+						// 금액 이외의 값을 입력했을 경우.
 						System.out.println("잘못된 입력입니다. 다시 결제해주세요.");
 					}
 				}
 			}else {
+				// 금액 이외의 값을 입력했을 경우.
 				System.out.println("잘못된 입력입니다. 다시 결제해주세요.");
 			}
 			
+
+			// 3. 주문 내역 출력 : 주문한 메뉴 XX, 결제 금액 XX, 잔돈 XX입니다.
+			// 누적 입력 금액 >= 메뉴 가격
 			if(charge >= menuPrice) {
-				// 3. 주문 내역 : 주문한 메뉴 XX, 결제 금액 XX, 잔돈 XX입니다.
 				System.out.println("주문하신 메뉴는 " + menuName +", 결제 금액은 " + charge + "원, 잔돈은 " + change + "원 입니다.");				
 			} else {
+				// 결제 금액이 부족할 경우
 				System.out.println("결제 금액이 부족하여 취소되었습니다. 처음부터 다시 해주세요.");
 			}
 		}
