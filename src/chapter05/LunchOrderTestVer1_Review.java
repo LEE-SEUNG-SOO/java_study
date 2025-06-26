@@ -55,34 +55,38 @@ public class LunchOrderTestVer1_Review {
 		}
 
 		// 2. 주문 메뉴 결제
-		System.out.print("결제 하실 금액은 " + menuPrice + "원 입니다. 결제를 진행해주세요. : ");
-		
-		if(scan.hasNextInt()) {
-			charge += scan.nextInt();
-			if(charge >= menuPrice) {
-				change = charge - menuPrice;
-			} else {
-				System.out.println("금액이 부족합니다. 다시 결제해주세요.");
-				System.out.println("현재 금액 : " + charge + "부족한 금액 " + (menuPrice - charge));
-				System.out.print("금액 입력 : ");
-				
-				if(scan.hasNextInt()) {
-					charge += scan.nextInt();
-					
-					if(charge >= menuPrice) {
-						change = charge - menuPrice;
-					} else {
-						System.out.println("금액이 부족합니다. 다시 결제해주세요.");
-					}
+		if(menuPrice != 0) {
+			System.out.print("결제 하실 금액은 " + menuPrice + "원 입니다. 결제를 진행해주세요. : ");
+			
+			if(scan.hasNextInt()) {
+				charge += scan.nextInt();
+				if(charge >= menuPrice) {
+					change = charge - menuPrice;
 				} else {
-					System.out.println("잘못된 입력입니다. 다시 결제해주세요.");
+					System.out.println("금액이 부족합니다. 다시 결제해주세요.");
+					System.out.println("현재 금액 : " + charge + "부족한 금액 " + (menuPrice - charge));
+					System.out.print("금액 입력 : ");
+					
+					if(scan.hasNextInt()) {
+						charge += scan.nextInt();
+						
+						if(charge >= menuPrice) {
+							change = charge - menuPrice;
+						} else {
+							System.out.println("금액이 부족합니다. 처음부터 다시해주세요.");
+						}
+					} else {
+						System.out.println("잘못된 입력입니다. 다시 결제해주세요.");
+					}
 				}
+			}else {
+				System.out.println("잘못된 입력입니다. 다시 결제해주세요.");
 			}
-		}else {
-			System.out.println("잘못된 입력입니다. 다시 결제해주세요.");
+			
+			if(charge >= menuPrice) {
+				// 3. 주문 내역 : 주문한 메뉴 XX, 결제 금액 XX, 잔돈 XX입니다.
+				System.out.println("주문하신 메뉴는 " + menuName +", 결제 금액은 " + charge + "원, 잔돈은 " + change + "원 입니다.");				
+			}
 		}
-		
-		// 3. 주문 내역 : 주문한 메뉴 XX, 결제 금액 XX, 잔돈 XX입니다.
-		System.out.println("주문하신 메뉴는 " + menuName +", 결제 금액은 " + charge + "원, 잔돈은 " + change + "원 입니다.");
 	}
 }
