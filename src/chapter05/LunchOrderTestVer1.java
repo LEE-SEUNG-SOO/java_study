@@ -1,5 +1,7 @@
 package chapter05;
-
+/*
+ * 조건문만 사용
+ */
 import java.util.Scanner;
 
 public class LunchOrderTestVer1 {
