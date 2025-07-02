@@ -39,6 +39,8 @@ public class ScoreTestVer4 {
 			System.out.println("1. 학생 등록");
 			System.out.println("2. 학생 리스트 출력");
 			System.out.println("3. 학생 성적 검색");
+			System.out.println("4. 학생 성적 수정");
+			System.out.println("5. 학생 데이터 삭제");
 			System.out.println("9. 프로그램 종료");
 			System.out.println("--------------------------------------------");
 			System.out.print("메뉴를 선택해주세요 : ");
@@ -186,13 +188,134 @@ public class ScoreTestVer4 {
 								searchFlag = false;
 							}
 						} 
-						// 검색 결과, 일치하는  학생이 없을 경우
+						// 검색 결과, 일치하는 학생이 없을 경우
 						else {
 							System.out.println("검색한 학생이 존재하지 않습니다.");
 						}
 					}// while - searchFlag : Step.4, Step.5 반복
 				} 
 				// 학생 수가 0명일 경우
+				else {
+					System.out.println(" -- 등록된 데이터가 없습니다. 등록을 진행해 주세요. --");
+				}
+			}
+			//4. 학생 성적 수정
+			else if(menuNo == 4) {
+				// 등록된 학생수가 있을 경우
+				if(studentCount > 0) {
+					boolean modiFlag = true;
+					while(modiFlag) {
+						System.out.print("수정할 학생명을 입력해주세요. : ");
+						String modiName = scan.next();
+						int modiIdx = -1;
+						
+						for(int i = 0; i < studentCount; i++) {
+							// 입력한 학생명이 존재할경우
+							if(modiName.equals(nameList[i])) {
+								// 인덱스 저장
+								modiIdx = i;
+							}
+						}
+						
+						// 검색 결과, 일치하는 학생이 있을 경우
+						if(modiIdx >= 0) {
+							// new 사용
+//							scoreList[modiIdx] = new int[subjectListNumber+2];
+							
+							// 총점 초기화
+							scoreList[modiIdx][subjectListNumber] = 0;
+							
+							// 기존 메모리 영역을 수정
+							for(int i = 0; i < subjectListNumber; i++) {
+								System.out.print(SUBJECTLIST[i] + " 점수 : ");
+								// 각 점수 수정
+								scoreList[modiIdx][i] = scan.nextInt();
+								// 총점
+								scoreList[modiIdx][subjectListNumber] += scoreList[modiIdx][i];
+							}
+
+							// 평균
+							scoreList[modiIdx][subjectListNumber+1] = (scoreList[modiIdx][subjectListNumber]/subjectListNumber);
+							
+							System.out.println(" -- 수정 완료 -- ");
+							System.out.println("--------------------------------------------");
+							System.out.println("학생명\t국어\t영어\t수학\t총점\t평균" );
+							System.out.println("--------------------------------------------");
+							System.out.print(nameList[modiIdx] + "\t");
+							// 반복하며 출력
+							for(int score : scoreList[modiIdx]) {
+								System.out.print(score + "\t");
+							}
+							System.out.println();
+							System.out.println("--------------------------------------------");
+						}
+						// 검색 결과, 일치하는 학생이 없을 경우
+						else {
+							System.out.println("검색한 학생이 존재하지 않습니다.");
+						}
+						
+						System.out.println("계속 수정하시겠습니까?(y/n)");
+							
+						if(scan.next().equals("n")) {
+							modiFlag = false;
+						}
+					}
+				}
+				// 학생 수가 0명일 경우
+				else {
+					System.out.println(" -- 등록된 데이터가 없습니다. 등록을 진행해 주세요. --");
+				}
+			}
+			
+			//5. 학생 성적 삭제
+			else if(menuNo == 5) {
+				// 수정할 학생 검색
+				// 대상 있음 : 배열로 부터 삭제.
+				// 			 삭제된 배열의 인덱스 + 1의 데이터를 삭제된 배열에 저장.
+				// 대상 없음 : 수정 불가. 검색 데이터 없음 출력
+				// 데이터 등록 여부 확인
+				if(studentCount > 0) {
+					boolean delFlag = true;
+					while(delFlag) {
+
+						System.out.print("삭제할 학생명을 입력해주세요.(종료:n) : ");
+						String delName = scan.next();
+						int delIdx = -1;
+						
+						// 대상 확인
+						for(int i = 0; i < studentCount; i++) {
+							if(delName.equals(nameList[i])) {
+								delIdx = i;
+							}
+						}
+						
+						// 대상이 없을 경우
+						if(delIdx == -1) {
+							System.out.println("입력한 학생이 없습니다. 다시 입력해주세요.");
+						} 
+						// 대상이 있을 경우
+						else {
+							// 대상의 인덱스의 값을 인덱스 + 1값의 데이터로 수정(마지막 배열 전까지 반복)
+							for(int i = delIdx; i < studentCount-1; i++) {
+								nameList[i] = nameList[i+1];
+								scoreList[i] = scoreList[i+1];
+							}
+							
+							// 등록된 학생수의 마지막 배열 초기화
+							nameList[studentCount-1] = null;
+							scoreList[studentCount-1] = new int[subjectListNumber+2];
+							studentCount--;
+						}
+						
+						System.out.println("-- 삭제 완료 --");
+						System.out.print("계속 수정 하시겠습니까?(y/n) : ");
+						// 반복 종료
+						if(scan.next().equals("n")) {
+							delFlag = false;
+						}
+					}
+				}
+				// 등록된 학생이 없을 경우
 				else {
 					System.out.println(" -- 등록된 데이터가 없습니다. 등록을 진행해 주세요. --");
 				}
