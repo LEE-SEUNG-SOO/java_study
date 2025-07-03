@@ -3,7 +3,7 @@ package chapter06;
  * 배열 생성 및 할당 테스트
  */
 public class ArrayTest02 {
-
+		
 	public static void main(String[] args) {
 		// names 문자열 변수 선언 및 생성
 		String names[];
