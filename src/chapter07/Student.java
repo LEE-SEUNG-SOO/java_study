@@ -28,11 +28,4 @@ public class Student {
 	public int getAvg() {
 		return ((kor + eng + math)/3);
 	}
-	
-//	public void tot() {
-//		System.out.print((kor + eng + math) + "\t");
-//	}
-//	public void avg() {
-//		System.out.print(((kor + eng + math)/3) + "\n");
-//	}
 }

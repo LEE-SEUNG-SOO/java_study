@@ -75,12 +75,6 @@ public class ScoreMgmSystem {
 //		System.out.print(student.kor + "\t");
 //		System.out.print(student.eng + "\t");
 //		System.out.print(student.math + "\t");
-////		System.out.print(student.tot + "\t");
-////		System.out.print(student.avg + "\n");
-//		System.out.print(student.getTot() + "\t");
-//		System.out.print(student.getAvg() + "\n");		
-////		student.tot();
-////		student.avg();		
 		System.out.println("------------------------------------");
 	}
 	public void update() {
