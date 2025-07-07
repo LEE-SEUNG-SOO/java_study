@@ -280,6 +280,7 @@ public class ScoreMgmSystem {
 	 * 각 기능의 반복 실행을 확인하는 메소드
 	 */
 	public boolean loopCheck(String pname) {
+		// 결과
 		boolean flag = true;
 		
 		System.out.print("계속 " + pname +" 하시겠습니까?(y/n) : ");
