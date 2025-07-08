@@ -35,8 +35,8 @@ public class DrinkOrderSystem {
 		}
 	}
 	
-	// 메뉴판 출력
-	public void menuList() {
+	// drinkOrder
+	public void drinkOrder() {
 		// 메뉴 설정
 		setMenu();
 		
