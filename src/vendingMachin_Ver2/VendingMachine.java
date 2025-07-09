@@ -4,12 +4,12 @@ import commons.Menu;
 
 public class VendingMachine {
 	// Field
-	public static final int MAX_NUM = 4;
-	String[] nameList = {"☕ 밀크커피","☕ 아메리카노","🍋 유자차","🥛 우유 "};
-	int[] priceList = {300,400,300,200};
-	int coin;
+	public static final String[] NAMELIST = {"☕ 밀크커피","☕ 아메리카노","🍋 유자차","🥛 우유 "};
+	public static final int[] PRICELIST = {300,400,300,200};
+	public static final int MAX_NUM = NAMELIST.length;
 	Menu[] menuList = new Menu[VendingMachine.MAX_NUM];
 	Menu[] orderMenuList = new Menu[VendingMachine.MAX_NUM];
+	int coin;
 	User user;
 	
 	// Constructor
@@ -33,8 +33,8 @@ public class VendingMachine {
 			Menu menu = menuList[i];
 			
 			menu.setNo(i+1);
-			menu.setName(nameList[i]);
-			menu.setPrice(priceList[i]);
+			menu.setName(NAMELIST[i]);
+			menu.setPrice(PRICELIST[i]);
 		}
 	}
 	
@@ -68,6 +68,12 @@ public class VendingMachine {
 			if(!checkCoin(coin)) {
 				System.out.println("금액이 부족합니다. 추가로 동전을 넣어주세요.");
 				acceptCoin();
+			} else {
+				System.out.println("입금 금액 : " + coin);
+				System.out.print(user.getName() + "님 추가 입금 하시겠습니까?(끝:n, 계속:n제외 아무키) : ");
+				if(!user.scan.next().equals("n")) {
+					acceptCoin();
+				}
 			}
 		}
 	}
@@ -76,10 +82,10 @@ public class VendingMachine {
 	public void orderMenu() {
 		// 메뉴 표시
 		viewMenu(orderMenuList);
-		System.out.print("메뉴를 선택해주세요.(숫자) : ");
+		System.out.print(user.getName() + "님 메뉴를 선택해주세요.(숫자) : ");
 		
 		if(user.scan.hasNextInt()) {
-			int orderMenu = user.scan.nextInt();
+			int orderMenu = user.getScan().nextInt();
 			// 선택한 메뉴 설정
 			if(orderMenuCheck(orderMenu)) {
 				Menu menu = orderMenuList[orderMenu-1];	
@@ -135,11 +141,11 @@ public class VendingMachine {
 		
 		// 잔액으로 추가 주문이 가능할 경우
 		if(checkCoin(change)) {
-			System.out.println("추가로 주문 하시겠습니까?(종료:n, 그외 계속주문)");
+			System.out.println(user.getName() + "님 추가로 주문 하시겠습니까?(종료:n, 그외 계속주문)");
 			
 			// n입력시 종료
 			if(user.scan.next().equals("n")) {
-				System.out.println(user.name + "님 이용해주셔서 감사합니다.");
+				System.out.println(user.getName() + "님 이용해주셔서 감사합니다.");
 			} else {
 				// 코인에 잔액을 넣는다
 				coin = change;
@@ -150,7 +156,7 @@ public class VendingMachine {
 		// 잔액이 메뉴의 최소금액 보다 작을경우
 		else {
 			System.out.println("잔액이 부족하므로 종료됩니다.");
-			System.out.println(user.name + "님 이용해주셔서 감사합니다.");
+			System.out.println(user.getName() + "님 이용해주셔서 감사합니다.");
 		}
 	}
 	
