@@ -13,20 +13,24 @@ public class VendingMachine {
 	User user;
 	
 	// Constructor
-	// 메뉴 생성
 	public VendingMachine() {
 		// 메뉴 생성
 		createMenu();
 	}
 	
 	// Method
+	/**
+	 * 초기화
+	 */
 	public void init() {
 		// 메뉴리스트 설정
 		coin = 0;
 		orderMenuList = new Menu[VendingMachine.MAX_NUM];
 	}
 		
-	// 메뉴 생성
+	/**
+	 * 메뉴 생성
+	 */
 	public void createMenu() {
 		for(int i = 0; i < VendingMachine.MAX_NUM; i++) {
 			menuList[i] = new Menu();
@@ -38,7 +42,10 @@ public class VendingMachine {
 		}
 	}
 	
-	// 메뉴 출력
+	/**
+	 * 메뉴를 출력
+	 * @param menuList
+	 */
 	public void viewMenu(Menu[] menuList) {
 		System.out.println("========= 메뉴판 =========");
 		for(Menu menu : menuList) {
@@ -51,7 +58,10 @@ public class VendingMachine {
 		System.out.println("=============================");
 	}
 	
-	// 동전 입금
+	/**
+	 * 입력받은 금액을 체크하여 100원 또는 500원이 아닐경우 다시 입력하는 메소드
+	 * 또한 입력받은 금액을 누적하여 체크, 메뉴의 최소 금액이 아닐경우 다시 입력
+	 */
 	public void acceptCoin() {
 		System.out.print(user.name + "님 동전을 넣어주세요.(100원 또는 500원) : ");
 		int checkCoin = user.insertCoin();
@@ -78,7 +88,9 @@ public class VendingMachine {
 		}
 	}
 	
-	// 메뉴 주문
+	/**
+	 * 선택한 메뉴에 대해 제조를 시작
+	 */
 	public void orderMenu() {
 		// 메뉴 표시
 		viewMenu(orderMenuList);
@@ -107,7 +119,9 @@ public class VendingMachine {
 		}
 	}
 	
-	// 메뉴 결제
+	/**
+	 * 입력한 금액 - 선택한 메뉴 가격의 결과를 리턴(잔액)
+	 */
 	public int payment(Menu menu) {
 		int change = 0;
 		// 잔액 입금 총액 - 선택 메뉴 가격
@@ -118,7 +132,11 @@ public class VendingMachine {
 		return change;
 	}
 
-	// 코인 체크
+	/**
+	 * 입력받은 금액에 대해 메뉴의 가격과 비교결과 최소값이상이 있을 경우 true, 없을경우 false를 반환
+	 * @param checkCoin
+	 * @return boolean
+	 */
 	public boolean checkCoin(int checkCoin) {
 		boolean checkFlag = false;
 		
@@ -134,7 +152,10 @@ public class VendingMachine {
 		return checkFlag;
 	}
 	
-	// 파이널 체크
+	/**
+	 * 제조후 잔액을 확인하여 추가로 메뉴를 선택할지 말지 확인
+	 * @param change
+	 */
 	public void finalCheck(int change) {
 		// 초기화
 		init();
@@ -160,7 +181,11 @@ public class VendingMachine {
 		}
 	}
 	
-	// 주문 가능한 메뉴 체크
+	/**
+	 * 주문가능한 메뉴에 대해 입력받은 번호의 메뉴가 존재하는지 체크. 존재할 경우 true, 존재하지 않을경우 false
+	 * @param orderMenu
+	 * @return
+	 */
 	public boolean orderMenuCheck(int orderMenu) {
 		boolean result = false;
 		
