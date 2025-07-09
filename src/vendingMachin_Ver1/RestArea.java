@@ -12,9 +12,9 @@ public class RestArea {
 	}
 	public RestArea(String name) {
 		this.name = name;
-		welcome();
 		user = new User("정국");
-		machine = new VendingMachine();
+		welcome();
+		machine = new VendingMachine(user);
 	}
 	// Method
 	public void welcome() {
