@@ -3,7 +3,7 @@ package kbank;
 public class BankMan {
 	public String name;
 	public KBBank kbBank;
-	AccountVo acVo;
+	private AccountVo acVo;
 	
 	public BankMan() {
 		

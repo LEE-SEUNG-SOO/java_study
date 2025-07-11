@@ -8,13 +8,15 @@ public class Customer {
 	private String password;
 	private int money;
 	private AccountPaperVo paper;
-	Scanner scan = new Scanner(System.in);
+	private AccountVo account;
+	Scanner scan;
 	
 	public Customer() {
 		
 	}
 	
 	public Customer(String name, String accountNumber, String password, int money) {
+		scan = new Scanner(System.in);
 		this.name = name;
 		this.accountNumber = accountNumber;
 		this.password = password;
@@ -67,5 +69,12 @@ public class Customer {
 	public void setMoney(int money) {
 		this.money = money;
 	}
-	
+
+	public AccountVo getAccount() {
+		return account;
+	}
+
+	public void setAccount(AccountVo account) {
+		this.account = account;
+	}
 }

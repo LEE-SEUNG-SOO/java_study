@@ -12,12 +12,13 @@ public class KBBankTest {
 		// 고객 입장
 		Customer customer = new Customer("홍길동","kb-1234","1234",0);
 		// 용지 작성
-		customer.setPaper(paper);		
+		customer.setPaper(paper);
 		// 은행 직원에게 용지 전달
 		staff.setPaper(customer.getPaper());
 		// 은행직원이 용지확인
 		boolean result = staff.checkPaper();
 
+		// 용지 내용에 부족한 내용이 존재할 경우
 		while(!result) {
 			// 고객이 금액을 입력
 			customer.answerMoney(paper);

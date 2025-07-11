@@ -4,6 +4,7 @@ public class BankMan {
 	String name;
 	AccountPaperVo paper;
 	AccountVo[] accountList; // 은행 고객 리스트
+	AccountVo account;
 	
 	public BankMan() {
 		this("변우석");
@@ -23,7 +24,11 @@ public class BankMan {
 	 */
 	
 	public void changeProcess() {
-		
+		for(AccountVo ac : accountList) {
+			if(ac.getAccountNumber().equals(account.getAccountNumber())) {
+				account.setBalance(account.getBalance() - paper.getMoney());
+			}
+		}
 	}
 	
 	/**
@@ -39,7 +44,7 @@ public class BankMan {
 	public boolean checkPaper() {
 		boolean result = false;
 		boolean checkFlag = false;
-		AccountVo account = new AccountVo();
+		account = new AccountVo();
 		
 		System.out.println("============용지 내용============");
 		System.out.println("이름    : " + paper.getName());
@@ -72,8 +77,9 @@ public class BankMan {
 			}
 		} else {
 			System.out.println("입력한 계좌번호의 고객이 존재하지 않습니다.");
+			account = new AccountVo();
 		}
-			
+		
 		return result;
 	}
 	
@@ -116,8 +122,5 @@ public class BankMan {
 			System.out.println("패스워드 : " + account.getPassword());			
 			System.out.println("=================");
 		}
-		
 	}
-	
-	
 }
