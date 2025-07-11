@@ -67,7 +67,9 @@ public class Customer {
 		this.scan = scan;
 	}
 	
-	// 입출금 용지 작성
+	/**
+	 *  입출금 용지 작성
+	 */
 	private void writeAccoutPaper() {
 		accountPaper.setName(name);
 		accountPaper.setAccountNumber(accountNumber);
@@ -77,12 +79,21 @@ public class Customer {
 		System.out.println(printName(name) + " 입출금 정보 작성 완료");
 	}
 	
-	// 출력용
+	/**
+	 * 고객명 출력용
+	 * @param name 고객이름
+	 * @return [고    객 : 고객이름]
+	 */
 	public String printName(String name) {
 		return "[고   객 : " + name +"]";
 	}
 	
-	// 입출금 용지 추가 작성
+	/**
+	 * 입출금 용지 추가 작성
+	 * @param checkResult 유효성 체크 결과
+	 * 	1: 이름, 2: 계좌번호, 3: 비밀번호, 4: 출금금액 미입력
+	 * @return 입출금용지
+	 */
 	public AccountPaperVo answer(int checkResult) {
 		switch(checkResult) {
 			case BankMan.ACCOUNT_NAME:

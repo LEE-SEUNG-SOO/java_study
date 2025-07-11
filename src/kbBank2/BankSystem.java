@@ -12,7 +12,9 @@ public class BankSystem {
 		// 고객정보 리스트 생성
 		createAccountList();
 	}
-	// 고객정보 리스트 생성
+	/**
+	 *  고객정보 리스트 생성
+	 */
 	private void createAccountList() {
 		String[] names = {"홍길동","이순신","김유신"};
 		String[] accountNumbers = {"kb-123","kb-456","kb-789"};
@@ -49,6 +51,7 @@ public class BankSystem {
 	
 	/**
 	 * 고객 정보 출력(고객 정보를 입력받았을 경우)
+	 * @param account 고객정보
 	 */
 	public void showAccountList(AccountVo account) {
 		System.out.println("====================고객 정보=====================");
@@ -59,7 +62,11 @@ public class BankSystem {
 		System.out.println("================================================");
 	}
 	
-	// 고객 계좌 확인
+	/**
+	 * 고객 계좌 확인
+	 * @param accountPaper 입출금용지
+	 * @return 계좌의 인덱스(존재하지않을경우 -1)
+	 */
 	public int searchAccount(AccountPaperVo accountPaper) {
 		int accountIdx = -1;
 		
@@ -82,7 +89,10 @@ public class BankSystem {
 		return accountIdx;
 	}
 	
-	// 고객 정보를 입력받아 해당 고객의 정보 출력
+	/**
+	 * 고객 정보를 입력받아 해당 고객의 정보 출력
+	 * @param accountPaper 입출금용지
+	 */
 	public void confirmMoney(AccountPaperVo accountPaper) {
 		int accountIdx = searchAccount(accountPaper);
 		

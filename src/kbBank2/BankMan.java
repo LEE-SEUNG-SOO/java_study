@@ -42,70 +42,38 @@ public class BankMan {
 	
 	/**
 	 * 고객의 입출금용지 유효성 체크
+	 * @param accountPaper 입출금 용지 정보
+	 * @return 유효성 체크결과 재실시필요 : true
 	 */
-	public boolean checkValidate(AccountPaperVo updateAccountPaper) {
+	public boolean checkValidate(AccountPaperVo accountPaper) {
 		boolean validateFlag = true;
 		result = 0;
-		this.accountPaper = updateAccountPaper;
 		
 		System.out.println(name + " 유효성 체크 실시");
 		
 		if(accountPaper.getName() == null) {
 			result = ACCOUNT_NAME;
-			ask(ACCOUNT_NAME);
 		} else if(accountPaper.getAccountNumber() == null) {
-			result = ACCOUNT_NUMBER;
-			ask(ACCOUNT_NUMBER);			
+			result = ACCOUNT_NUMBER;	
 		} else if(accountPaper.getPassword() == null) {
 			result = ACCOUNT_PASSWORD;
-			ask(ACCOUNT_PASSWORD);
 		} else if(accountPaper.getMoney() == 0) {
 			result = ACCOUNT_MONEY;
-			ask(ACCOUNT_MONEY);
 		} else {
-			validateFlag = false;
 			result = ACCOUNT_OK;
-			ask(ACCOUNT_OK);
+			validateFlag = false;
 		}
 		
-		return validateFlag;
-	}	
-	
-	/**
-	 * 고객의 입출금용지 유효성 체크
-	 */
-	public boolean checkValidate() {
-		boolean validateFlag = true;
-		result = 0;
-		System.out.println(name + " 유효성 체크 실시");
-		
-		if(accountPaper.getName() == null) {
-			result = ACCOUNT_NAME;
-			ask(ACCOUNT_NAME);
-		} else if(accountPaper.getAccountNumber() == null) {
-			result = ACCOUNT_NUMBER;
-			ask(ACCOUNT_NUMBER);			
-		} else if(accountPaper.getPassword() == null) {
-			result = ACCOUNT_PASSWORD;
-			ask(ACCOUNT_PASSWORD);
-		} else if(accountPaper.getMoney() == 0) {
-			result = ACCOUNT_MONEY;
-			ask(ACCOUNT_MONEY);
-		} else {
-			validateFlag = false;
-			result = ACCOUNT_OK;
-			ask(ACCOUNT_OK);
-		}
+		ask();
 		
 		return validateFlag;
-	}	
-	
+	}
 	
 	/**
 	 * 고객의 출금 정보유효성 체크 결과에 따른 질문
 	 */
-	public void ask(int status) {
-		switch(status) {
+	public void ask() {
+		switch(result) {
 			case ACCOUNT_NAME:
 				System.out.print(name + " 이름을 입력해주세요. : ");
 				break;
@@ -136,9 +104,9 @@ public class BankMan {
 		if(accountIdx != -1) {
 			AccountVo account = bankSystem.accountList[accountIdx];
 			
-			// 검색한 계정의 금액 >= 출금용지의 금액 일경우
+			// 검색한 계정금액 >= 출금용지 금액 일경우
 			if(account.getMoney() >= accountPaper.getMoney()) {
-				// 계정의 금액 = 계정금액 - 출금용지 금액
+				// 계정금액 = 계정금액 - 출금용지 금액
 				int money = account.getMoney() - accountPaper.getMoney();
 				account.setMoney(money);
 				

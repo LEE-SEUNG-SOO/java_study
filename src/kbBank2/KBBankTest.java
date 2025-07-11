@@ -29,10 +29,11 @@ public class KBBankTest {
 		staff.setAccountPaper(hong.getAccountPaper());
 		
 		// 직원이 입출금 용지 확인(빈값 확인)
-		validateFlag = staff.checkValidate();
+		validateFlag = staff.checkValidate(staff.getAccountPaper());
 		
 		// 입출금 용지 반복 확인
 		while(validateFlag) {
+			
 			// 추가 입력한 값에 유효성 체크 반복 실시 결과 모든 값이 입력됬을 경우
 			if(!staff.checkValidate(hong.answer(staff.result))) {
 				// 반복문 종료
@@ -43,6 +44,7 @@ public class KBBankTest {
 		// 출금 처리
 		staff.processWithDrawal();
 				
+		// 출금 후 계좌 정보 출력
 		bankSystem.confirmMoney(hong.getAccountPaper());
 	}
 }
