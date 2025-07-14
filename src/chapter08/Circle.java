@@ -16,7 +16,7 @@ public class Circle extends Shape implements ShapeInterface {
 	
 	@Override
 	public void draw() {
-		System.out.println(color + " 원형");
+		System.out.println(color + CIRCLE);
 	}
 
 	@Override

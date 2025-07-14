@@ -8,5 +8,7 @@ public interface ShapeInterface {
 	// 추상 메소드들만 모아두는 곳이기때문에 abstract 키워드를 쓰지 않아도 된다.
 	public double getArea(); 
 	// 상수를 정의해서 사용할 수 있다.(변수 X)
-	public static final String TEST = "test";
-}
+	public static final String CIRCLE = "원형";
+	public static final String TRIANGLE = "삼각형";
+	public static final String RECTANGLE = "사각형";
+} 

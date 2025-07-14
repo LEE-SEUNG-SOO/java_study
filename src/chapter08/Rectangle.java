@@ -18,7 +18,7 @@ public class Rectangle extends Shape implements ShapeInterface {
 	
 	@Override
 	public void draw() {
-		System.out.println(color + " 사각형");
+		System.out.println(color + RECTANGLE);
 	}
 	
 	@Override
