@@ -4,6 +4,14 @@ public class Circle extends Shape implements ShapeInterface {
 //	String color;
 	int radius;
 	
+	public int getRadius() {
+		return radius;
+	}
+
+	public void setRadius(int radius) {
+		this.radius = radius;
+	}
+
 	public Circle() {
 		this("흰색",0);
 	}
