@@ -5,8 +5,8 @@ package commons;
  */
 public class Animal {
 	// Field : 전역 변수
-	String name;
-	int age;
+	public String name;
+	public int age;
 	
 	public String publicName;
 	public int publicAge;
