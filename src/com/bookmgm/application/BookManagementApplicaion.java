@@ -7,12 +7,19 @@ import com.bookmgm.service.DefaultBookService;
 
 public class BookManagementApplicaion {
 	
+	// 도서 등록
 	public static final int REGISTER = 1;
+	// 도서 목록
 	public static final int LIST = 2;
+	// 도서 검색
 	public static final int SEARCH = 3;
+	// 도서 수정
 	public static final int UPDATE = 4;
+	// 도서 삭제
 	public static final int DELETE = 5;
+	// 도서관 변경
 	public static final int SELECTREPOSITORY = 6;
+	// 종료
 	public static final int EXIT = 7;
 	
 	public Scanner scan;
@@ -52,30 +59,37 @@ public class BookManagementApplicaion {
 			int menu = scan.nextInt();
 			
 			switch(menu) {
+				// 도서 등록
 				case REGISTER:
 					service.register();
 					showMenu();
 					break;
+				// 도서 목록
 				case LIST:
 					service.list();
 					showMenu();
 					break;
+				// 도서 검색
 				case SEARCH:
 					service.search();
 					showMenu();
 					break;
+				// 도서 수정
 				case UPDATE:
 					service.update();
 					showMenu();
 					break;
+				// 도서 삭제
 				case DELETE:
 					service.delete();
 					showMenu();
 					break;
+				// 도서관 변경
 				case SELECTREPOSITORY:
 					service.selectRepository();
 					showMenu();
 					break;
+				// 종료
 				case EXIT:
 					service.exit();
 					break;

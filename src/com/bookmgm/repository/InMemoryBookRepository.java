@@ -93,7 +93,7 @@ public class InMemoryBookRepository implements BookRepository{
 	}
 
 	/**
-	 * 총 도서 정보 출력
+	 * 모든 도서 정보 출력
 	 */
 	@Override
 	public List<Book> selectAll() {

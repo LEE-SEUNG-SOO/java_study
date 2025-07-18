@@ -13,7 +13,9 @@ import com.bookmgm.repository.Yes24BookRepository;
 
 public class DefaultBookService implements BookService{
 	BookManagementApplicaion bmApp;
+	// 도서 정보
 	BookRepository repository;
+	// 도서관 정보
 	List<BookRepository> repositoryList;
 	
 	public DefaultBookService() {
@@ -186,6 +188,9 @@ public class DefaultBookService implements BookService{
 		System.exit(0);
 	}
 
+	/**
+	 * 등록된 도서 정보 갯수
+	 */
 	@Override
 	public int getCount() {
 		return repository.getCount();
