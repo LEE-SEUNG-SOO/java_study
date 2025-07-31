@@ -1,19 +1,18 @@
 package com.scoremgm.service;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
 import com.scoremgm.app.ScoreMgmSystem;
-import com.scoremgm.model.Member;
-import com.scoremgm.repository.ScoreRepository;
+import com.scoremgm.model.MemberVO;
 import com.scoremgm.repository.ScoreRepositoryImpl;
 
-public class ScoreServiceImpl implements ScoreService{
+import db.GenericRepositoryInterface;
+
+public class ScoreServiceImpl implements ScoreService {
 	Scanner scan;
-	ScoreRepository repository = new ScoreRepositoryImpl();
+	GenericRepositoryInterface<MemberVO> repository = new ScoreRepositoryImpl();
 	ScoreMgmSystem sms;
 	
 	
@@ -41,12 +40,12 @@ public class ScoreServiceImpl implements ScoreService{
 //		memberInfo.forEach(System.out::println);
 		
 		// Member 생성
-		Member member = new Member();
+		MemberVO member = new MemberVO();
 		// Member 설정
-		setMemberInfo(member,memberInfo);
+		setMemberInfo(member, memberInfo);
 		
 		// 저장소에 저장을 위한 Repository 호출
-		if(repository.insert(member)) {
+		if(repository.insert(member) != 0) {
 			System.out.println("=> 등록 성공");
 		} else {
 			System.out.println("=> 등록 실패");
@@ -60,20 +59,22 @@ public class ScoreServiceImpl implements ScoreService{
 	@Override
 	public void list() {
 		if(getCount() != 0) {
-			List<Member> list = repository.findAll();
+			List<MemberVO> list = repository.findAll();
 			System.out.println("========================================================");
-			System.out.println("학번\t\t이름\t전공\t국어\t영어\t수학");
+			System.out.println("번호\t학번\t이름\t전공\t국어\t영어\t수학");
 			System.out.println("========================================================");
 			
 			list.forEach((member) -> {
-				System.out.print(member.getNo() + "\t");
+				System.out.print(member.getRno() + "\t");
+				System.out.print(member.getMid() + "\t");
 				System.out.print(member.getName() + "\t");
 				System.out.print(member.getDepartment() + "\t");
 				System.out.print(member.getKor() + "\t");
 				System.out.print(member.getEng() + "\t");
-				System.out.println(member.getMath());
+				System.out.print(member.getMath() + "\n");
 			});
 			System.out.println("========================================================");
+			
 		} else {
 			System.out.println("=> 등록된 학생이 없습니다.");
 		}
@@ -88,23 +89,23 @@ public class ScoreServiceImpl implements ScoreService{
 	public void search() {
 		// 학생 정보가 존재할경우
 		if(getCount() != 0) {
-			System.out.print("학번(뒤4자리) : ");
-			String no = scan.next();
+			System.out.print("학번(MXXXX) : ");
+			String mid = scan.next();
 			
 			// 학번으로 학생 정보 검색
-			Member member = repository.findMember(no);
+			MemberVO member = repository.find(mid);
 			
 			// 학번이 일치하는 정보가 존재할 경우
 			if(member != null) {
 				System.out.println("========================================================");
-				System.out.println("학번\t\t이름\t전공\t국어\t영어\t수학");
+				System.out.println("학번\t이름\t전공\t국어\t영어\t수학");
 				System.out.println("========================================================");
-				System.out.print(member.getNo() + "\t");
+				System.out.print(member.getMid() + "\t");
 				System.out.print(member.getName() + "\t");
 				System.out.print(member.getDepartment() + "\t");
 				System.out.print(member.getKor() + "\t");
 				System.out.print(member.getEng() + "\t");
-				System.out.println(member.getMath());
+				System.out.print(member.getMath() + "\n");
 				System.out.println("========================================================");
 			} else {
 				System.out.println("=> 입력한 학번의 학생이 존재하지 않습니다.");
@@ -128,7 +129,7 @@ public class ScoreServiceImpl implements ScoreService{
 			String no = scan.next();
 			
 			// 학번으로 학생 정보 검색
-			Member member = repository.findMember(no);
+			MemberVO member = repository.find(no);
 			
 			// 학번이 일치하는 정보가 존재할 경우
 			if(member != null) {
@@ -142,21 +143,22 @@ public class ScoreServiceImpl implements ScoreService{
 				member.setMath((int)memberInfo.get(2));
 				
 				// storage에 member 업데이트
-				if(repository.update(member)) {
+				if(repository.update(member) != 0) {
 					System.out.println("=> 수정 성공");
 				} else {
 					System.out.println("=> 수정 실패");
 				}
 				
 				System.out.println("========================================================");
-				System.out.println("학번\t\t이름\t전공\t국어\t영어\t수학");
+				System.out.println("번호\t학번\t이름\t전공\t국어\t영어\t수학");
 				System.out.println("========================================================");
-				System.out.print(member.getNo() + "\t");
+				System.out.print(member.getRno() + "\t");
+				System.out.print(member.getMid() + "\t");
 				System.out.print(member.getName() + "\t");
 				System.out.print(member.getDepartment() + "\t");
 				System.out.print(member.getKor() + "\t");
 				System.out.print(member.getEng() + "\t");
-				System.out.println(member.getMath());
+				System.out.print(member.getMath() + "\n");
 				System.out.println("========================================================");
 			} else {
 				System.out.println("=> 입력한 학번의 학생이 존재하지 않습니다.");
@@ -180,7 +182,7 @@ public class ScoreServiceImpl implements ScoreService{
 			String no = scan.next();
 			
 			// 학번으로 학생 정보 검색
-			Member member = repository.findMember(no);
+			MemberVO member = repository.find(no);
 			
 			// 학번이 일치하는 정보가 존재할 경우
 			if(member != null) {
@@ -188,7 +190,7 @@ public class ScoreServiceImpl implements ScoreService{
 				System.out.print("정말로 삭제 하시겠습니까?(y:삭제, 취소:y이외)");
 				if(scan.next().equals("y")) {
 					// storage에서 member 삭제
-					if(repository.remove(member.getNo())) {
+					if(repository.remove(member.getMid()) != 0) {
 						System.out.println("=> 삭제 성공");
 					} else {
 						System.out.println("=> 삭제 실패");
@@ -220,12 +222,13 @@ public class ScoreServiceImpl implements ScoreService{
 	public List createMemberInfo() {
 		String[] labels = {"학생명","전공과목","국어","영어","수학"};
 		
-		// 학번 생성
-		Random random = new Random();
-		Calendar calendar = Calendar.getInstance();
-		String year = String.valueOf(calendar.getWeekYear());
-		String randomNo = String.valueOf(random.nextInt(1000,9999));
-		String no = year + "-" + randomNo;
+		// 학번 생성 -> trigger로 자동 생성
+//		Random random = new Random();
+//		Calendar calendar = Calendar.getInstance();
+//		String year = String.valueOf(calendar.getWeekYear());
+//		String randomNo = String.valueOf(random.nextInt(1000,9999));
+//		String no = year + "-" + randomNo;
+		//memberInfo.add(0,no);
 		
 		List memberInfo = new ArrayList();
 		
@@ -242,7 +245,6 @@ public class ScoreServiceImpl implements ScoreService{
 			}			
 		}
 		
-		memberInfo.add(0,no);
 		
 		return memberInfo;
 	}
@@ -252,12 +254,12 @@ public class ScoreServiceImpl implements ScoreService{
 	 * @param no 학번
 	 * @return List 학생정보
 	 */
-	public List createMemberInfo(Member member) {
+	public List createMemberInfo(MemberVO member) {
 		String[] labels = {"국어","영어","수학"};
 		
 		// 학번 생성		
 		List memberInfo = new ArrayList();
-		System.out.println("학번 : " + member.getNo() + ", " +"학생명 : " + member.getName());
+		System.out.println("학번 : " + member.getMid() + ", " +"학생명 : " + member.getName());
 		
 		// 학생 정보 저장
 		for(int i = 0; i < labels.length; i++) {
@@ -272,12 +274,12 @@ public class ScoreServiceImpl implements ScoreService{
 	/**
 	 * member 설정
 	 */
-	public void setMemberInfo(Member member, List memberInfo) {
-		member.setNo((String)memberInfo.get(0));
-		member.setName((String)memberInfo.get(1));
-		member.setDepartment((String)memberInfo.get(2));
-		member.setKor((int)memberInfo.get(3));
-		member.setEng((int)memberInfo.get(4));
-		member.setMath((int)memberInfo.get(5));
+	public void setMemberInfo(MemberVO member, List memberInfo) {
+		// member.setMid((String)memberInfo.get(0));
+		member.setName((String)memberInfo.get(0));
+		member.setDepartment((String)memberInfo.get(1));
+		member.setKor((int)memberInfo.get(2));
+		member.setEng((int)memberInfo.get(3));
+		member.setMath((int)memberInfo.get(4));
 	}
 }

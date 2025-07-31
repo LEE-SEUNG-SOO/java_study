@@ -6,14 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import commons.DefaultInterface;
+
 /*
  * Connection, statment, close 기능을 실행하는 클래스
  */
-public class DBConn {
+public class DBConn implements DefaultInterface{
 	// Field
-	private String url = "jdbc:mysql://localhost:3306/hrdb2019";
-	private String user = "root";
-	private String password = "mysql1234";
 	Connection con;
 	protected Statement stmt;
 	protected PreparedStatement pstmt;
@@ -23,9 +22,9 @@ public class DBConn {
 	protected DBConn() {
 		// 1단계 실행
 		try {
-			con = DriverManager.getConnection(url, user, password);
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			
-			System.out.println("1단계 성공 : " + con);
+//			System.out.println("1단계 성공 : " + con);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -36,7 +35,7 @@ public class DBConn {
 	protected void getStatement() {
 		try {
 			stmt = con.createStatement();
-			System.out.println("2단계 성공 : " + stmt);
+//			System.out.println("2단계 성공 : " + stmt);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -46,7 +45,7 @@ public class DBConn {
 	protected void getPreparedStatement(String sql) {
 		try {
 			pstmt = con.prepareStatement(sql);
-			System.out.println("2단계 성공 : " + pstmt);
+//			System.out.println("2단계 성공 : " + pstmt);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
