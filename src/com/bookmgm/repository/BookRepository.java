@@ -10,7 +10,7 @@ import db.GenericRepositoryInterface;
 
 public class BookRepository extends DBConn
 	implements GenericRepositoryInterface<BookVO> {
-	
+	// 테이블 정보를 가져오기 위한 DefaultBookService
 	DefaultBookService bs;
 	
 	public BookRepository() {
@@ -175,7 +175,8 @@ public class BookRepository extends DBConn
 				book.setIsbn(rs.getInt(6));
 				book.setBdate(rs.getString(7));
 				
-				list.add(book);
+				list.add(book);				
+				
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -183,7 +184,6 @@ public class BookRepository extends DBConn
 		
 		return list;
 	}
-
 	
 	/**
 	 * 도서 정보 검색
@@ -192,7 +192,7 @@ public class BookRepository extends DBConn
 	public BookVO find(String bid) {
 		// 실행 결과
 		BookVO book = null;
-	
+
 		// sql 베이스
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT bid, title, author, price, isbn, bdate FROM ");
@@ -216,7 +216,7 @@ public class BookRepository extends DBConn
 				book.setAuthor(rs.getString(3));
 				book.setPrice(rs.getInt(4));
 				book.setIsbn(rs.getInt(5));
-				book.setBdate(rs.getString(6));
+				book.setBdate(rs.getString(6));				
 			}
 			
 		}catch (Exception e) {

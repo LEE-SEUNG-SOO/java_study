@@ -87,7 +87,6 @@ public class DefaultBookService implements BookService{
 				printBook(book, true);
 			}
 			System.out.println("==================================");
-			
 		} else {
 			System.out.println("등록된 도서가 존재하지 않습니다.");
 		}
@@ -215,7 +214,7 @@ public class DefaultBookService implements BookService{
 		System.out.print("저자 : ");
 		book.setAuthor(bmApp.scan.next());
 		
-		while(!flag) {			
+		while(!flag) {
 			System.out.print("가격 : ");
 			if(bmApp.scan.hasNextInt()) {
 				book.setPrice(bmApp.scan.nextInt());
@@ -265,6 +264,7 @@ public class DefaultBookService implements BookService{
 	 * @param flag 
 	 */
 	public void printBook(BookVO book, boolean flag) {
+		// 전체 출력시 rno출력
 		if(flag) {
 			System.out.print(book.getRno() + " : ");
 		}
@@ -275,7 +275,7 @@ public class DefaultBookService implements BookService{
 		System.out.print(book.getPrice() + ", ");
 		System.out.print(book.getBdate() + "\n");
 	}
-
+	
 	public String getTable() {
 		return table;
 	}
