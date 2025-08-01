@@ -11,7 +11,7 @@ import commons.DefaultInterface;
 /*
  * Connection, statment, close 기능을 실행하는 클래스
  */
-public class DBConn implements DefaultInterface{
+public class DBConn implements DefaultInterface {
 	// Field
 	protected Connection con;
 	protected Statement stmt;
@@ -23,7 +23,6 @@ public class DBConn implements DefaultInterface{
 		// 1단계 실행
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
-			
 //			System.out.println("1단계 성공 : " + con);
 		} catch (Exception e) {
 			e.printStackTrace();

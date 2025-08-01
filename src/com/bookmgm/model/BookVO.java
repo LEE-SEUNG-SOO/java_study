@@ -1,6 +1,7 @@
 package com.bookmgm.model;
 
 public class BookVO {
+	private int rno;
 	private String bid;
 	private String title;
 	private String author;
@@ -8,6 +9,12 @@ public class BookVO {
 	private int isbn;
 	private String bdate;
 	
+	public int getRno() {
+		return rno;
+	}
+	public void setRno(int rno) {
+		this.rno = rno;
+	}
 	public String getBid() {
 		return bid;
 	}

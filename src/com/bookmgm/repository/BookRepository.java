@@ -10,7 +10,7 @@ import db.GenericRepositoryInterface;
 
 public class BookRepository extends DBConn
 	implements GenericRepositoryInterface<BookVO> {
-	List<BookVO> library = new ArrayList<BookVO>();
+	
 	DefaultBookService bs;
 	
 	public BookRepository() {
@@ -18,7 +18,6 @@ public class BookRepository extends DBConn
 	
 	public BookRepository(DefaultBookService bs) {
 		this.bs = bs;
-		System.out.println("** 교육센터 도서관 생성**");
 	}
 	
 	/**
@@ -92,7 +91,7 @@ public class BookRepository extends DBConn
 		int result = 0;
 		// sql 베이스
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT count(bid) FROM ");
+		sql.append("SELECT count(bid) AS count FROM ");
 		sql.append(bs.getTable());
 		
 		try {
@@ -103,7 +102,7 @@ public class BookRepository extends DBConn
 			
 			while(rs.next()) {
 				// 카운트 갯수 설정
-				result = rs.getInt(1);
+				result = rs.getInt("count");
 			};
 			
 		}catch (Exception e) {
@@ -154,7 +153,8 @@ public class BookRepository extends DBConn
 		
 		// sql 베이스
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT bid, title, author, price, isbn, bdate FROM ");
+		sql.append("SELECT row_number() over(order by bid) as rno,"
+				+ " bid, title, author, price, isbn, bdate FROM ");
 		sql.append(bs.getTable());
 		
 		try {
@@ -167,12 +167,13 @@ public class BookRepository extends DBConn
 				// 출력 결과 설정
 				BookVO book = new BookVO();
 				
-				book.setBid(rs.getString(1));
-				book.setTitle(rs.getString(2));
-				book.setAuthor(rs.getString(3));
-				book.setPrice(rs.getInt(4));
-				book.setIsbn(rs.getInt(5));
-				book.setBdate(rs.getString(6));
+				book.setRno(rs.getInt(1));
+				book.setBid(rs.getString(2));
+				book.setTitle(rs.getString(3));
+				book.setAuthor(rs.getString(4));
+				book.setPrice(rs.getInt(5));
+				book.setIsbn(rs.getInt(6));
+				book.setBdate(rs.getString(7));
 				
 				list.add(book);
 			}
