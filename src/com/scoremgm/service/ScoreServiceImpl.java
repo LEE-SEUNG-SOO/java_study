@@ -125,11 +125,11 @@ public class ScoreServiceImpl implements ScoreService {
 	public void update() {
 		// 학생 정보가 존재할경우
 		if(getCount() != 0) {
-			System.out.print("학번(뒤4자리) : ");
-			String no = scan.next();
+			System.out.print("학번 : ");
+			String mid = scan.next();
 			
 			// 학번으로 학생 정보 검색
-			MemberVO member = repository.find(no);
+			MemberVO member = repository.find(mid);
 			
 			// 학번이 일치하는 정보가 존재할 경우
 			if(member != null) {
@@ -145,21 +145,20 @@ public class ScoreServiceImpl implements ScoreService {
 				// storage에 member 업데이트
 				if(repository.update(member) != 0) {
 					System.out.println("=> 수정 성공");
+					
+					System.out.println("========================================================");
+					System.out.println("학번\t이름\t전공\t국어\t영어\t수학");
+					System.out.println("========================================================");
+					System.out.print(member.getMid() + "\t");
+					System.out.print(member.getName() + "\t");
+					System.out.print(member.getDepartment() + "\t");
+					System.out.print(member.getKor() + "\t");
+					System.out.print(member.getEng() + "\t");
+					System.out.print(member.getMath() + "\n");
+					System.out.println("========================================================");
 				} else {
 					System.out.println("=> 수정 실패");
 				}
-				
-				System.out.println("========================================================");
-				System.out.println("번호\t학번\t이름\t전공\t국어\t영어\t수학");
-				System.out.println("========================================================");
-				System.out.print(member.getRno() + "\t");
-				System.out.print(member.getMid() + "\t");
-				System.out.print(member.getName() + "\t");
-				System.out.print(member.getDepartment() + "\t");
-				System.out.print(member.getKor() + "\t");
-				System.out.print(member.getEng() + "\t");
-				System.out.print(member.getMath() + "\n");
-				System.out.println("========================================================");
 			} else {
 				System.out.println("=> 입력한 학번의 학생이 존재하지 않습니다.");
 			}
@@ -178,11 +177,11 @@ public class ScoreServiceImpl implements ScoreService {
 	public void delete() {
 		// 학생 정보가 존재할경우
 		if(getCount() != 0) {
-			System.out.print("학번(뒤4자리) : ");
-			String no = scan.next();
+			System.out.print("학번 : ");
+			String mid = scan.next();
 			
 			// 학번으로 학생 정보 검색
-			MemberVO member = repository.find(no);
+			MemberVO member = repository.find(mid);
 			
 			// 학번이 일치하는 정보가 존재할 경우
 			if(member != null) {
@@ -212,6 +211,7 @@ public class ScoreServiceImpl implements ScoreService {
 	@Override
 	public void exit() {
 		System.out.println("== 프로그램 종료 ==");
+		repository.close();
 		System.exit(0);
 	};
 	

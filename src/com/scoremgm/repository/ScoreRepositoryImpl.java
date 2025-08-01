@@ -20,8 +20,10 @@ public class ScoreRepositoryImpl extends DBConn
 	 */
 	@Override
 	public int insert(MemberVO member) {
+		// 결과값
 		int result = 0;
 		
+		// insert sql 베이스
 		String sql = """
 					INSERT INTO score_member(name, department, kor, eng, math, mdate)
 					VALUES(?, ?, ?, ?, ?, sysdate() )
@@ -45,71 +47,81 @@ public class ScoreRepositoryImpl extends DBConn
 		return result;
 	}
 
+	/**
+	 * 학생 정보 수정
+	 */
 	@Override
-	public int update(MemberVO entity) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int remove(String no) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int update(MemberVO member) {
+		// 실행 결과
+		int result = 0;
+		
+		// UPDATE sql 베이스
+		String sql = """
+					UPDATE score_member 
+					SET kor = ?, eng = ?, math = ?, mdate = sysdate()
+					WHERE mid = ?
+				""";
+		try {
+			// sql 설정
+			getPreparedStatement(sql);
+			// 파라미터 설정
+			pstmt.setInt(1, member.getKor());
+			pstmt.setInt(2, member.getEng());
+			pstmt.setInt(3, member.getMath());
+			pstmt.setString(4, member.getMid());
+			// sql 실행
+			result = pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 	
-//	/**
-//	 * 학생 정보 수정
-//	 */
-//	@Override
-//	public boolean update(MemberVO member) {
-//		boolean result = false;
-//		int index;
-//		
-//		for(index = 0; index < storage.size(); index++) {
-//			MemberVO m = storage.get(index);
-//			
-//			if(member.getNo().equals(m.getNo())) {
-//				result = true;
-//				storage.set(index, member);
-//				index = storage.size();
-//			}
-//		}
-//		
-//		return result;
-//	}
-//	
-//	/**
-//	 * 학생 정보 삭제
-//	 */
-//	public boolean remove(String no) {
-//		boolean result = false;
-//		
-//		Iterator<MemberVO> ie = storage.iterator();
-//		
-//		while(ie.hasNext()) {
-//			MemberVO mebmer = ie.next();
-//			if(mebmer.getNo().equals(no)) {
-//				ie.remove();
-//				result = true;
-//				break;
-//			}
-//		}
-//		
-//		return result;
-//	}
-//	
+	/**
+	 * 학생 정보 삭제
+	 */
+	public int remove(String mid) {
+		// 실행 결과
+		int result = 0;
+		// DELETE sql 베이스
+		String sql = """
+					DELETE FROM score_member
+					WHERE mid = ?
+				""";
+		
+		try {
+			// sql 설정
+			getPreparedStatement(sql);
+			// 파라미터 설정
+			pstmt.setString(1, mid);
+			// sql 실행
+			result = pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	/**
 	 * 학생 총 수 출력
 	 */
 	@Override
 	public int getCount() {
+		// 결과값
 		int result = 0;
+		// select sql 베이스
 		String sql = "SELECT COUNT(*) FROM score_member";
 		
 		try {
-			getPreparedStatement(sql);			
+			// sql 설정
+			getPreparedStatement(sql);
+			// sql 실행
 			rs = pstmt.executeQuery();
-			// 카운트 가져오기
+			// 실행 결과 설정
 			while(rs.next()) {
 				result = rs.getInt(1);
 			}
@@ -125,8 +137,10 @@ public class ScoreRepositoryImpl extends DBConn
 	 */
 	@Override
 	public List<MemberVO> findAll(){
+		// 모든 학생 정보
 		List<MemberVO> list = new ArrayList<MemberVO>();
 		
+		// select sql 베이스
 		String sql = """
 					SELECT 
 						row_number() over(),
@@ -140,9 +154,12 @@ public class ScoreRepositoryImpl extends DBConn
 					FROM score_member
 				""" ;
 		try {
+			// sql 설정
 			getPreparedStatement(sql);
+			// sql 실행
 			rs = pstmt.executeQuery();
 		
+			// 실행결과 설정
 			while(rs.next()) {
 				MemberVO member = new MemberVO();
 				
@@ -155,6 +172,7 @@ public class ScoreRepositoryImpl extends DBConn
 				member.setMath(rs.getInt(7));
 				member.setMdate(rs.getString(8));
 				
+				// sql 실행 결과 설정
 				list.add(member);
 			}
 			
@@ -170,8 +188,10 @@ public class ScoreRepositoryImpl extends DBConn
 	 */
 	@Override
 	public MemberVO find(String mid) {
+		// 학번 기준 학생 정보
 		MemberVO member = null;
 		
+		// select sql 베이스
 		String sql = """
 					SELECT 
 						mid, 
@@ -186,11 +206,15 @@ public class ScoreRepositoryImpl extends DBConn
 				""" ;
 		
 		try {
+			// sql 설정
 			getPreparedStatement(sql);
+			// 파라미터 설정
 			pstmt.setString(1, mid);
+			// sql 실행
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
+				// 실행 결과 설정
 				member = new MemberVO();
 				member.setMid(rs.getString(1));
 				member.setName(rs.getString(2));

@@ -7,13 +7,13 @@ import com.bookmgm.model.BookVO;
 import db.DBConn;
 import db.GenericRepositoryInterface;
 
-public class AladinBookRepository extends DBConn
+public class TjBookRepository extends DBConn
 	implements GenericRepositoryInterface<BookVO> {
 	
 	List<BookVO> library = new ArrayList<BookVO>();
 	
-	public AladinBookRepository() {
-		System.out.println("** 알라딘 도서관 생성**");
+	public TjBookRepository() {
+		System.out.println("** 교육센터 도서관 생성**");
 	}
 	
 	/**
@@ -25,7 +25,7 @@ public class AladinBookRepository extends DBConn
 		int result = 0;
 		// sql 베이스
 		String sql = """
-					INSERT INTO book_aladin(title, author, price, isbn, bdate)
+					INSERT INTO book_tj(title, author, price, isbn, bdate)
 					VALUES(?, ?, ?, ?, sysdate())
 				""";
 		
@@ -48,37 +48,6 @@ public class AladinBookRepository extends DBConn
 	}
 
 	/**
-	 * 도서 수정
-	 */
-	@Override
-	public int update(BookVO book) {
-		// 실행 결과
-		int result = 0;
-		// sql 베이스
-		String sql = """
-					UPDATE book_aladin
-					 SET title = ?, author = ?, price = ?, bdate = sysdate()
-					 WHERE bid = ?
-				""";
-		try {
-			// sql 설정
-			getPreparedStatement(sql);
-			// 파라미터 설정
-			pstmt.setString(1, book.getTitle());
-			pstmt.setString(2, book.getAuthor());
-			pstmt.setInt(3, book.getPrice());
-			pstmt.setString(4, book.getBid());
-			// sql 실행
-			result = pstmt.executeUpdate();		
-			
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return result;
-	}
-
-	/**
 	 * 도서 제거
 	 * @param bid : 도서 번호
 	 */
@@ -87,7 +56,7 @@ public class AladinBookRepository extends DBConn
 		// 실행 결과
 		int result = 0;
 		// sql 베이스
-		String sql = "DELETE FROM book_aladin WHERE bid = ?";
+		String sql = "DELETE FROM book_tj WHERE bid = ?";
 
 		try {
 			// sql 설정
@@ -112,7 +81,7 @@ public class AladinBookRepository extends DBConn
 		// 실행 결과
 		int result = 0;
 		// sql 베이스
-		String sql = "SELECT count(bid) FROM book_aladin";
+		String sql = "SELECT count(bid) FROM book_tj";
 		
 		try {
 			// sql 설정
@@ -133,6 +102,37 @@ public class AladinBookRepository extends DBConn
 	}
 
 	/**
+	 * 도서 수정
+	 */
+	@Override
+	public int update(BookVO book) {
+		// 실행 결과
+		int result = 0;
+		// sql 베이스
+		String sql = """
+					UPDATE book_tj
+					 SET title = ?, author = ?, price = ?, bdate = sysdate()
+					 WHERE bid = ?
+				""";
+		try {
+			// sql 설정
+			getPreparedStatement(sql);
+			// 파라미터 설정
+			pstmt.setString(1, book.getTitle());
+			pstmt.setString(2, book.getAuthor());
+			pstmt.setInt(3, book.getPrice());
+			pstmt.setString(4, book.getBid());
+			// sql 실행
+			result = pstmt.executeUpdate();		
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	/**
 	 * 모든 도서 정보 출력
 	 */
 	@Override
@@ -140,7 +140,7 @@ public class AladinBookRepository extends DBConn
 		List<BookVO> list = new ArrayList<BookVO>();
 		
 		// sql 베이스
-		String sql = "SELECT bid, title, author, price, isbn, bdate FROM book_aladin";
+		String sql = "SELECT bid, title, author, price, isbn, bdate FROM book_tj";
 		
 		try {
 			// sql 설정
@@ -161,13 +161,13 @@ public class AladinBookRepository extends DBConn
 				
 				list.add(book);
 			}
-			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		return list;
 	}
+
 	
 	/**
 	 * 도서 정보 검색
@@ -179,7 +179,7 @@ public class AladinBookRepository extends DBConn
 	
 		// sql 베이스
 		String sql = "SELECT bid, title, author, price, isbn, bdate"
-					+ " FROM book_aladin"
+					+ " FROM book_tj"
 					+ " WHERE bid = ?";
 				
 		try {
@@ -208,4 +208,5 @@ public class AladinBookRepository extends DBConn
 		
 		return book;
 	}
+	
 }

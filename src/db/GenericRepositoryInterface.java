@@ -9,4 +9,5 @@ public interface GenericRepositoryInterface<T> {
 	public int getCount();
 	public List<T> findAll();
 	public T find(String id);
+	public void close();
 }

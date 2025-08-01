@@ -5,26 +5,27 @@ import java.util.List;
 import java.util.Random;
 
 import com.bookmgm.application.BookManagementApplicaion;
-import com.bookmgm.model.Book;
+import com.bookmgm.model.BookVO;
 import com.bookmgm.repository.AladinBookRepository;
-import com.bookmgm.repository.BookRepository;
-import com.bookmgm.repository.InMemoryBookRepository;
+import com.bookmgm.repository.TjBookRepository;
 import com.bookmgm.repository.Yes24BookRepository;
+
+import db.GenericRepositoryInterface;
 
 public class DefaultBookService implements BookService{
 	BookManagementApplicaion bmApp;
 	// 도서 정보
-	BookRepository repository;
+	GenericRepositoryInterface<BookVO> repository;
 	// 도서관 정보
-	List<BookRepository> repositoryList;
+	List<GenericRepositoryInterface<BookVO>> repositoryList;
 	
 	public DefaultBookService() {
 	}
 	
 	public DefaultBookService(BookManagementApplicaion bmApp) {
 		this.bmApp = bmApp;
-		repositoryList = new ArrayList<BookRepository>();
-		repositoryList.add(new InMemoryBookRepository());
+		repositoryList = new ArrayList<GenericRepositoryInterface<BookVO>>();
+		repositoryList.add(new TjBookRepository());
 		repositoryList.add(new AladinBookRepository());
 		repositoryList.add(new Yes24BookRepository());
 		
@@ -64,10 +65,10 @@ public class DefaultBookService implements BookService{
 	@Override
 	public void register() {
 		// book 객체 생성
-		Book book = createBook();
+		BookVO book = createBook();
 		
 		// repository에 도서 정보 등록
-		if(repository.insert(book)) {
+		if(repository.insert(book) != 0) {
 			System.out.println("도서가 등록되었습니다.");
 		} else {
 			System.out.println("도서 등록에 실패하였습니다.");
@@ -81,11 +82,11 @@ public class DefaultBookService implements BookService{
 	public void list() {
 		// 등록된 도서가 존재할경우
 		if(getCount() != 0) {
-			List<Book> list = repository.selectAll();
+			List<BookVO> list = repository.findAll();
 
 			System.out.println("[도서 목록 조회]");
 			System.out.println("==================================");
-			for(Book book : list) {
+			for(BookVO book : list) {
 				printBook(book);
 			}
 			System.out.println("==================================");
@@ -103,10 +104,10 @@ public class DefaultBookService implements BookService{
 		// 등록된 도서가 존재할경우
 		if(getCount() != 0) {
 			System.out.print("도서 번호 : ");
-			String id = bmApp.scan.next();
+			String bid = bmApp.scan.next();
 			
 			// 도서 번호로 검색
-			Book book = repository.select(id);
+			BookVO book = repository.find(bid);
 
 			if(book != null) {
 				System.out.println("[도서 목록 조회]");
@@ -128,16 +129,16 @@ public class DefaultBookService implements BookService{
 		// 등록된 도서가 존재할경우
 		if(getCount() != 0) {
 			System.out.print("도서 번호 : ");
-			String id = bmApp.scan.next();
+			String bid = bmApp.scan.next();
 			
 			// 도서 번호로 검색
-			Book book = repository.select(id);
+			BookVO book = repository.find(bid);
 
 			if(book != null) {
-				Book newBook = createBook(book);
+				BookVO newBook = createBook(book);
 
 				// 도서 정보 수정
-				if(repository.update(newBook)) {
+				if(repository.update(newBook) != 0) {
 					System.out.println("[도서 정보 수정 완료]");
 					System.out.println("==================================");
 					printBook(newBook);
@@ -162,14 +163,14 @@ public class DefaultBookService implements BookService{
 		// 등록된 도서가 존재할경우
 		if(getCount() != 0) {
 			System.out.print("도서 번호 : ");
-			String id = bmApp.scan.next();
+			String bid = bmApp.scan.next();
 			
 			// 도서 번호로 검색
-			Book book = repository.select(id);
+			BookVO book = repository.find(bid);
 
 			if(book != null) {
-				if(repository.remove(book)) {
-					System.out.println("[" + id  +"] 도서를 삭제 했습니다.");
+				if(repository.remove(book.getBid()) != 0) {
+					System.out.println("[" + bid  +"] 도서를 삭제 했습니다.");
 				} else {
 					System.out.println("도서 삭제에 실패하였습니다.");
 				}
@@ -185,6 +186,7 @@ public class DefaultBookService implements BookService{
 	@Override
 	public void exit() {
 		System.out.println("== 프로그램 종료 ==");
+		repository.close();
 		System.exit(0);
 	}
 
@@ -199,19 +201,17 @@ public class DefaultBookService implements BookService{
 	 * 도서 정보 생성
 	 * @return Book 도서 정보
 	 */
-	public Book createBook() {
-		Book book = new Book();
-		Random random = new Random();
+	public BookVO createBook() {
+		BookVO book = new BookVO();
 		boolean flag = false;
-		book.setId(String.valueOf(random.nextInt(1000,9999)));
-				
+		Random random = new Random();
+		
 		System.out.println("[도서 등록]");
 		System.out.print("도서명 : ");
-		book.setName(bmApp.scan.next());
+		book.setTitle(bmApp.scan.next());
 
 		System.out.print("저자 : ");
 		book.setAuthor(bmApp.scan.next());
-		
 		
 		while(!flag) {			
 			System.out.print("가격 : ");
@@ -224,21 +224,23 @@ public class DefaultBookService implements BookService{
 			}
 		}
 		
+		book.setIsbn(random.nextInt(1000,9999));
+		
 		return book;
 	}
 	
 	/**
 	 * 도서 정보 생성
-	 * @param Book old book 정보
+	 * @param BookVO old book 정보
 	 * @return Book 수정된 도서 정보
 	 * 도서 수정시 도서 정보를 일부 수정하여 반환
 	 */
-	public Book createBook(Book book) {
+	public BookVO createBook(BookVO book) {
 		boolean flag = false;
 		
 		System.out.println("[도서 정보 수정]");
 		System.out.print("도서명 : ");
-		book.setName(bmApp.scan.next());
+		book.setTitle(bmApp.scan.next());
 
 		System.out.print("저자 : ");
 		book.setAuthor(bmApp.scan.next());
@@ -261,10 +263,12 @@ public class DefaultBookService implements BookService{
 	 * 도서 정보 출력 : 검색, 수정시 결과 출력
 	 * @param book
 	 */
-	public void printBook(Book book) {
-		System.out.print("[" + book.getId() + "] ");
-		System.out.print(book.getName() + " - ");
+	public void printBook(BookVO book) {
+		System.out.print("[" + book.getBid() + "] ");
+		System.out.print(book.getTitle() + " - ");
 		System.out.print(book.getAuthor() + ", ");
-		System.out.println(book.getPrice());	
+		System.out.print(book.getPrice() + ", ");
+		System.out.print(book.getIsbn() + ", ");
+		System.out.print(book.getBdate() + "\n");
 	}
 }

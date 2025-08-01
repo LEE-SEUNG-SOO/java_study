@@ -13,7 +13,7 @@ import commons.DefaultInterface;
  */
 public class DBConn implements DefaultInterface{
 	// Field
-	Connection con;
+	protected Connection con;
 	protected Statement stmt;
 	protected PreparedStatement pstmt;
 	protected ResultSet rs;
@@ -59,6 +59,9 @@ public class DBConn implements DefaultInterface{
 			}
 			if(stmt != null) {
 				stmt.close();
+			}
+			if(pstmt != null) {
+				pstmt.close();
 			}
 			if(con != null) {
 				con.close();
