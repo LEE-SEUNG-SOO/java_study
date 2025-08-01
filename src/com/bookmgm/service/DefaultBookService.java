@@ -1,34 +1,27 @@
 package com.bookmgm.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import com.bookmgm.application.BookManagementApplicaion;
 import com.bookmgm.model.BookVO;
-import com.bookmgm.repository.AladinBookRepository;
-import com.bookmgm.repository.TjBookRepository;
-import com.bookmgm.repository.Yes24BookRepository;
+import com.bookmgm.repository.BookRepository;
 
 import db.GenericRepositoryInterface;
 
 public class DefaultBookService implements BookService{
 	BookManagementApplicaion bmApp;
+	// 도서관 정보(테이블명)
+	String table;
 	// 도서 정보
 	GenericRepositoryInterface<BookVO> repository;
-	// 도서관 정보
-	List<GenericRepositoryInterface<BookVO>> repositoryList;
 	
 	public DefaultBookService() {
 	}
 	
 	public DefaultBookService(BookManagementApplicaion bmApp) {
 		this.bmApp = bmApp;
-		repositoryList = new ArrayList<GenericRepositoryInterface<BookVO>>();
-		repositoryList.add(new TjBookRepository());
-		repositoryList.add(new AladinBookRepository());
-		repositoryList.add(new Yes24BookRepository());
-		
+		repository = new BookRepository(this);
 		// 도서관 선택
 		selectRepository();
 	}
@@ -45,13 +38,13 @@ public class DefaultBookService implements BookService{
 		
 		// 도서관 설정
 		if(rno == 1) {
-			repository = repositoryList.get(rno - 1);
+			setTable("book_tj");
 			System.out.println("교육센터 도서관 선택");
 		} else if(rno == 2) {
-			repository = repositoryList.get(rno - 1);
+			setTable("book_aladin");
 			System.out.println("알라딘 도서관 선택");
 		} else if(rno == 3) {
-			repository = repositoryList.get(rno - 1);
+			setTable("book_yes24");
 			System.out.println("yes24 도서관 선택");
 		} else {
 			System.out.println("해당하는 도서관 없음");
@@ -270,5 +263,13 @@ public class DefaultBookService implements BookService{
 		System.out.print(book.getPrice() + ", ");
 		System.out.print(book.getIsbn() + ", ");
 		System.out.print(book.getBdate() + "\n");
+	}
+
+	public String getTable() {
+		return table;
+	}
+
+	public void setTable(String table) {
+		this.table = table;
 	}
 }
