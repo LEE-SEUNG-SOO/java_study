@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.scoremgm.model.MemberVO;
 
+import chapter21_mini_project.bookinterface.BookInterface;
 import db.DBConn;
 import db.GenericRepositoryInterface;
 
