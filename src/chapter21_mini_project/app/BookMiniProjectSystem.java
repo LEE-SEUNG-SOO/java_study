@@ -15,8 +15,8 @@ public class BookMiniProjectSystem {
 	public final int MENUCARTBILL = 7;				// 영수증 표시하기
 	// 관리자 계정전용
 	public final int MENUBOOKADDITEM = 1;			// 도서 등록(관리자 계정전용)
-	public final int MENUTBOOKREMOVEITEM = 2;		// 도서 삭제(관리자 계정전용)
-	public final int MENUBOOKUPDATEITEM = 3;		// 도서 수정(관리자 계정전용)
+	public final int MENUBOOKUPDATEITEM = 2;		// 도서 수정(관리자 계정전용)
+	public final int MENUTBOOKREMOVEITEM = 3;		// 도서 삭제(관리자 계정전용)
 	// 종료
 	public final int MENUEXIT = 8;					// 종료
 	
@@ -76,7 +76,7 @@ public class BookMiniProjectSystem {
 				}
 			}
 		}
-		
+		// 이름이 admin일 경우 관리자권한부여
 		if(name.equals("admin")) {
 			adminFlag = true;
 		}
@@ -87,7 +87,7 @@ public class BookMiniProjectSystem {
 			showMenuAdmin();
 			// 메뉴 선택(관리자 계정전용)
 			selectMenuAdmin();
-		} else {			
+		} else {
 			// 메뉴 표시
 			showMenu();
 			// 메뉴 선택
@@ -177,8 +177,8 @@ public class BookMiniProjectSystem {
 		System.out.println("\t	Welcome to Shopping Mall");
 		System.out.println("\t	Welcome to Book Market!");
 		System.out.println("*************************************************************");
-		System.out.println("1. 도서 등록\t 2. 도서 삭제");
-		System.out.println("3. 도서 수정\t 8. 종료");
+		System.out.println("1. 도서 등록\t 2. 도서 수정");
+		System.out.println("3. 도서 삭제\t 8. 종료");
 		System.out.println("*************************************************************");
 	}	
 	
@@ -198,20 +198,21 @@ public class BookMiniProjectSystem {
 					// 도서 등록
 					service.menuBookAddItem();
 					break;
+					// 도서 수정(관리자 전용)
+				case MENUBOOKUPDATEITEM :
+					// 도서 수정
+					service.menuBookUpdateItem();
+					break;
 				// 도서 삭제(관리자 전용)
 				case MENUTBOOKREMOVEITEM :
 					// 도서 삭제
 					service.menuBookRemoveItem();
 					break;
-				// 도서 수정(관리자 전용)
-				case MENUBOOKUPDATEITEM :
-					// 도서 삭제
-					service.menuBookUpdateItem();
-					break;
 				// 종료
 				case MENUEXIT :
 					System.out.println("시스템 종료");
 					service.menuExit();
+					System.exit(0);
 					break;
 				// 메뉴 이외의 값
 				default :
@@ -226,5 +227,5 @@ public class BookMiniProjectSystem {
 		
 		showMenuAdmin();
 		selectMenuAdmin();
-	}	
+	}
 }

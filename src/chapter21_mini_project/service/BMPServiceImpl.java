@@ -34,6 +34,7 @@ public class BMPServiceImpl implements BMPService {
 	public BMPServiceImpl(BookMiniProjectSystem bms) {
 		this.bms = bms;
 		this.scan = bms.scan;
+		customerRepository = new BMPCustomerDAO();
 		booksRepository = new BMPBooksDAO();
 		cartRepository = new BMPCartDAO();
 	};	
@@ -49,7 +50,6 @@ public class BMPServiceImpl implements BMPService {
 	public boolean createAccount(String name, String phone, String addr) {
 		int result = 0;
 		boolean flag = false;
-		customerRepository = new BMPCustomerDAO();
 		// 계정 정보 설정
 		customer.setcName(name);
 		customer.setcPhone(phone);
@@ -83,7 +83,6 @@ public class BMPServiceImpl implements BMPService {
 	 */
 	public boolean login(String name, String phone) {
 		boolean result = false;
-		customerRepository = new BMPCustomerDAO();
 		// 이름과 연락처로 고객 정보 취득
 		customer = customerRepository.find(name, phone);
 		
@@ -478,7 +477,6 @@ public class BMPServiceImpl implements BMPService {
 		customerRepository.close();
 		booksRepository.close();
 		cartRepository.close();
-		System.exit(0);
 	}
 	
 	@Override
@@ -530,9 +528,10 @@ public class BMPServiceImpl implements BMPService {
 			System.out.print(bmpBooks.getbDate() + " | ");
 			System.out.println();
 		}
-		
+		// 반복 ( 도서 테이블이 삭제되거나 5회이상 잘못 입력시 종료)
 		while(flag) {
 			count++;
+			// 5회 이상 반복됬을시 종료
 			if(count > 5) {
 				System.out.println("5회이상 틀렸습니다. 초기화면으로 돌아갑니다.");
 				break;
@@ -601,9 +600,10 @@ public class BMPServiceImpl implements BMPService {
 			System.out.print(bmpBooks.getbDate() + " | ");
 			System.out.println();
 		}
-		
+		// 반복 (도서정보를 수정하거나 5회이상 잘못 입력시 종료)
 		while(flag) {
 			count++;
+			// 5회이상 잘못 입력시 종료
 			if(count > 5) {
 				System.out.println("5회이상 틀렸습니다. 초기화면으로 돌아갑니다.");
 				break;
