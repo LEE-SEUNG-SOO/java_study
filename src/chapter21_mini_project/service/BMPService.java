@@ -10,7 +10,4 @@ public interface BMPService {
 	public void menuCartRemoveItem();
 	public void menuCartBill();
 	public void menuExit();
-	public void menuBookAddItem();
-	public void menuBookRemoveItem();
-	public void menuBookUpdateItem();
 }

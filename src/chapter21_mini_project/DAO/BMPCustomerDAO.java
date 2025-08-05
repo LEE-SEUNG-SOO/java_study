@@ -23,11 +23,10 @@ public class BMPCustomerDAO extends DBConn
 					FROM book_market_customer
 					WHERE cname = ?
 					AND cphone = ?
-				""";
-		// sql 설정
-		getPreparedStatement(sql);
-		
+				""";		
 		try{
+			// sql 설정
+			getPreparedStatement(sql);
 			// 파라미터 설정
 			pstmt.setString(1, name);
 			pstmt.setString(2, phone);
@@ -63,7 +62,6 @@ public class BMPCustomerDAO extends DBConn
 					INSERT INTO book_market_customer(cname, cphone, caddr, cdate)
 					VALUES(?, ?, ?, curdate())
 				""";
-		
 		try {
 			// sql 설정
 			getPreparedStatement(sql);
@@ -115,7 +113,7 @@ public class BMPCustomerDAO extends DBConn
 	public int remove(String cid, String bid) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
+	}   
 
 	@Override
 	public List<BMPCustomerVO> findAll(String cid) {

@@ -63,6 +63,7 @@ public class BMPServiceImpl implements BMPService {
 			// 로그인
 			flag = login(name, phone);
 			
+			// 로그인 결과
 			if(flag) {
 				System.out.println("로그인 성공");
 			} else {
@@ -241,7 +242,8 @@ public class BMPServiceImpl implements BMPService {
 		// 장바구니에 고객의 데이터가 존재 할 경우
 		if(cartRepository.getCount(customer.getcId()) != 0 ) {
 			String cid = customer.getcId();
-			int totalCount = 0;
+			// 반복 횟수 카운트
+			int checkCount = 0;
 			
 			List<BMPCartVO> list = new ArrayList<BMPCartVO>();
 			// 장바구니 테이블에서 고객 ID기준으로 레코드 취득
@@ -262,9 +264,9 @@ public class BMPServiceImpl implements BMPService {
 					
 					// 도서 정보가 수정될때까지 반복
 					while(flag) {
-						totalCount++;
+						checkCount++;
 						// 5회이상 잘못 입력시 초기화면으로 이동
-						if(totalCount > 5) {
+						if(checkCount > 5) {
 							System.out.println("※※※5회 이상 잘못 입력했습니다. 초기화면으로 돌아갑니다.");
 							break;
 						}
@@ -479,7 +481,6 @@ public class BMPServiceImpl implements BMPService {
 		cartRepository.close();
 	}
 	
-	@Override
 	/**
 	 * 도서 등록(관리자 전용)
 	 */
@@ -501,7 +502,6 @@ public class BMPServiceImpl implements BMPService {
 		}
 	}
 	
-	@Override
 	/**
 	 * 도서 삭제(관리자 전용)
 	 */
@@ -573,7 +573,7 @@ public class BMPServiceImpl implements BMPService {
 			}
 		}
 	}
-	@Override
+	
 	/**
 	 * 도서 삭제(관리자 전용)
 	 */

@@ -22,7 +22,6 @@ public class BMPCartDAO extends DBConn implements BookInterface<BMPCartVO>{
 					INSERT INTO book_market_cart(bid, count, total, cid)
 					VALUES(?, ?, ?, ?)
 				""";
-		
 		try {
 			// sql 설정
 			getPreparedStatement(sql);
@@ -57,7 +56,6 @@ public class BMPCartDAO extends DBConn implements BookInterface<BMPCartVO>{
 					WHERE cid = ?
 					AND bid = ?
 				""";
-		
 		try {
 			// sql 설정
 			getPreparedStatement(sql);
@@ -91,7 +89,6 @@ public class BMPCartDAO extends DBConn implements BookInterface<BMPCartVO>{
 					WHERE cid= ?
 					AND bid = ?
 				""";
-		
 		try {
 			// sql 설정
 			getPreparedStatement(sql);
@@ -123,7 +120,6 @@ public class BMPCartDAO extends DBConn implements BookInterface<BMPCartVO>{
 					FROM book_market_cart
 					WHERE cid = ?
 				""";
-		
 		try {		
 			// sql 설정
 			getPreparedStatement(sql);
@@ -159,7 +155,6 @@ public class BMPCartDAO extends DBConn implements BookInterface<BMPCartVO>{
 					FROM book_market_cart 
 					WHERE cid = ?
 				""";
-		
 		try {		
 			// sql 설정
 			getPreparedStatement(sql);
@@ -201,7 +196,6 @@ public class BMPCartDAO extends DBConn implements BookInterface<BMPCartVO>{
 					DELETE FROM book_market_cart
 					WHERE cid = ?
 				""";
-		
 		try {
 			// sql 설정
 			getPreparedStatement(sql);
@@ -234,7 +228,6 @@ public class BMPCartDAO extends DBConn implements BookInterface<BMPCartVO>{
 					WHERE cid = ? 
 					AND bid = ?
 				""";
-		
 		try {		
 			// sql 설정
 			getPreparedStatement(sql);

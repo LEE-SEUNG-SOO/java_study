@@ -22,7 +22,6 @@ public class BMPBooksDAO extends DBConn implements BookInterface<BMPBooksVO>{
 					INSERT INTO book_market_books(btitle, bprice, bauthor, bsubtitle, bgroup, bdate)
 					VALUES(?, ?, ?, ?, ?, curdate())
 				""";
-		
 		try {
 			// sql 설정
 			getPreparedStatement(sql);
@@ -56,7 +55,6 @@ public class BMPBooksDAO extends DBConn implements BookInterface<BMPBooksVO>{
 					SET btitle = ? , bprice = ? , bauthor = ? , bsubtitle = ? , bgroup = ? , bdate = curdate()
 					WHERE bid = ?
 				""";
-		
 		try {
 			// sql 설정
 			getPreparedStatement(sql);
@@ -90,7 +88,6 @@ public class BMPBooksDAO extends DBConn implements BookInterface<BMPBooksVO>{
 				DELETE FROM book_market_books
 				WHERE bid = ?
 				""";
-		
 		try {
 			// sql 설정
 			getPreparedStatement(sql);
@@ -125,7 +122,6 @@ public class BMPBooksDAO extends DBConn implements BookInterface<BMPBooksVO>{
 					SELECT bid, btitle, bprice, bauthor, bsubtitle, bgroup, bdate
 					FROM book_market_books
 				""";
-		
 		try {		
 			// sql 설정
 			getPreparedStatement(sql);
