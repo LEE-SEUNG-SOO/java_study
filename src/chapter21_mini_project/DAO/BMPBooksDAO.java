@@ -4,27 +4,94 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chapter21_mini_project.VO.BMPBooksVO;
-import chapter21_mini_project.bookinterface.BookInterface;
 import db.DBConn;
 
 public class BMPBooksDAO extends DBConn implements BookInterface<BMPBooksVO>{
 
 	@Override
-	public int insert(BMPBooksVO entity) {
-		// TODO Auto-generated method stub
-		return 0;
+	// 도서 등록
+	public int insert(BMPBooksVO book) {
+		int result = 0;
+		
+		// sql 베이스
+		String sql = """
+					INSERT INTO book_market_books(btitle, bprice, bauthor, bsubtitle, bgroup, bdate)
+					VALUES(?, ?, ?, ?, ?, curdate())
+				""";
+		
+		try {
+			// sql 설정
+			getPreparedStatement(sql);
+			// 파라미터 설정
+			pstmt.setString(1, book.getbTitle());
+			pstmt.setInt(2, book.getbPrice());
+			pstmt.setString(3, book.getbAuthor());
+			pstmt.setString(4, book.getbSubTitle());
+			pstmt.setString(5, book.getbGroup());
+			
+			result = pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
-	public int update(BMPBooksVO entity) {
-		// TODO Auto-generated method stub
-		return 0;
+	// 도서 수정
+	public int update(BMPBooksVO book) {
+		int result = 0;
+		// sql 베이스
+		String sql = """
+					UPDATE book_market_books
+					SET btitle = ? , bprice = ? , bauthor = ? , bsubtitle = ? , bgroup = ? , bdate = curdate()
+					WHERE bid = ?
+				""";
+		
+		try {
+			// sql 설정
+			getPreparedStatement(sql);
+			// 파라미터 설정
+			pstmt.setString(1, book.getbTitle());
+			pstmt.setInt(2, book.getbPrice());
+			pstmt.setString(3, book.getbAuthor());
+			pstmt.setString(4, book.getbSubTitle());
+			pstmt.setString(5, book.getbGroup());
+			pstmt.setString(6, book.getbId());
+			// sql 실행
+			result = pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
-	public int remove(String id) {
-		// TODO Auto-generated method stub
-		return 0;
+	// 도서 삭제
+	public int remove(String bid) {
+		int result = 0;
+		// sql 베이스
+		String sql = """
+				DELETE FROM book_market_books
+				WHERE bid = ?
+				""";
+		
+		try {
+			// sql 설정
+			getPreparedStatement(sql);
+			// 파라미터 설정
+			pstmt.setString(1, bid);
+			// sql 실행
+			result = pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override

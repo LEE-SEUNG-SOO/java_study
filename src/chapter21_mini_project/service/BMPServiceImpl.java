@@ -36,7 +36,13 @@ public class BMPServiceImpl implements BMPService {
 	};	
 	
 	// Method
-	// 계정 생성
+	/**
+	 * 계정 생성
+	 * @param name	이름
+	 * @param phone	폰번호
+	 * @param addr	주소
+	 * @return flag true : false
+	 */
 	public boolean createAccount(String name, String phone, String addr) {
 		int result = 0;
 		boolean flag = false;
@@ -66,7 +72,12 @@ public class BMPServiceImpl implements BMPService {
 		 return flag;
 	}
 	
-	// 로그인
+	/**
+	 * 로그인
+	 * @param name  : 이름
+	 * @param phone : 폰번호
+	 * @return result 로그인결과 true : false
+	 */
 	public boolean login(String name, String phone) {
 		boolean result = false;
 		customerRepository = new BMPCustomerDAO();
@@ -82,7 +93,9 @@ public class BMPServiceImpl implements BMPService {
 	}
 
 	@Override
-	// 고객 정보 확인
+	/**
+	 * 고객 정보 확인
+	 */
 	public void menuGuestInfo() {
 		System.out.println("현재 고객 정보");
 		System.out.println("이름  : " + customer.getcName());
@@ -90,7 +103,9 @@ public class BMPServiceImpl implements BMPService {
 	}	
 	
 	@Override
-	// 장바구니 상품 목록 확인
+	/**
+	 * 장바구니 상품 목록 확인
+	 */
 	public void menuCartItemList() {
 		// 장바구니에 고객의 데이터가 존재 할 경우
 		if(cartRepository.getCount(customer.getcId()) != 0 ) {
@@ -106,7 +121,9 @@ public class BMPServiceImpl implements BMPService {
 	}
 
 	@Override
-	// 장바구니 비우기
+	/**
+	 * 장바구니 비우기
+	 */
 	public void menuCartClear() {
 		// 장바구니 테이블에 고객의 데이터가 존재 할 경우
 		if(cartRepository.getCount(customer.getcId()) != 0 ) {
@@ -134,7 +151,9 @@ public class BMPServiceImpl implements BMPService {
 	}
 
 	@Override
-	// 장바구니에 항목 추가하기
+	/**
+	 * 장바구니에 항목 추가하기
+	 */
 	public void menuCartAddItem() {
 		List<BMPBooksVO> list = new ArrayList<BMPBooksVO>();
 		// 고객 ID설정
@@ -196,9 +215,9 @@ public class BMPServiceImpl implements BMPService {
 				
 				// 장바구니 추가 성공
 				if(result != 0) {
-					System.out.println("[ " + bmpCart.getbId() + " ] 도서가 장바구니에 추가되었습니다.");
+					System.out.println("[" + bmpCart.getbId() + "] 도서가 장바구니에 추가되었습니다.");
 				} else {
-					System.out.println("[ " + bmpCart.getbId() + " ] 도서의 장바구니 추가가 실패하였습니다.");
+					System.out.println("[" + bmpCart.getbId() + "] 도서의 장바구니 추가가 실패하였습니다.");
 				}
 				
 				flag = false;
@@ -213,7 +232,9 @@ public class BMPServiceImpl implements BMPService {
 	}
 	
 	@Override
-	// 장바구니의 항목 수량 줄이기
+	/**
+	 * 장바구니의 항목 수량 줄이기
+	 */
 	public void menuCartRemoveItemCount() {
 		// 장바구니에 고객의 데이터가 존재 할 경우
 		if(cartRepository.getCount(customer.getcId()) != 0 ) {
@@ -271,7 +292,7 @@ public class BMPServiceImpl implements BMPService {
 									int result = cartRepository.remove(cid, bid);
 									
 									if(result != 0) {										
-										System.out.println("[ " + bmpCart.getbId() + " ] 도서의 갯수가 0개 이므로 장바구니에서 삭제합니다.");
+										System.out.println("[" + bmpCart.getbId() + "] 도서의 갯수가 0개 이므로 장바구니에서 삭제합니다.");
 									} else {
 										System.out.println("장바구니 수정에 실패했습니다.");
 									}
@@ -280,7 +301,7 @@ public class BMPServiceImpl implements BMPService {
 									int result = cartRepository.update(bmpCart);
 									
 									if(result != 0) {										
-										System.out.println("[ " + bmpCart.getbId() + " ] 도서의 갯수를 [" + count + "]개 줄였습니다.");
+										System.out.println("[" + bmpCart.getbId() + "] 도서의 갯수를 [" + count + "]개 줄였습니다.");
 									} else {
 										System.out.println("장바구니 수정에 실패했습니다.");
 									}
@@ -304,7 +325,9 @@ public class BMPServiceImpl implements BMPService {
 	}
 
 	@Override
-	// 장바구니의 항목 삭제하기
+	/**
+	 * 장바구니의 항목 삭제하기
+	 */
 	public void menuCartRemoveItem() {
 		// 장바구니에 고객의 데이터가 존재 할 경우
 		if(cartRepository.getCount(customer.getcId()) != 0 ) {
@@ -338,10 +361,10 @@ public class BMPServiceImpl implements BMPService {
 						
 						// 장바구니 테이블의 레코드 삭제 성공
 						if(result != 0) {
-							System.out.println("[ " + bmpCart.getbId() + " ] 도서가 장바구니에서 삭제되었습니다.");
+							System.out.println("[" + bmpCart.getbId() + "] 도서가 장바구니에서 삭제되었습니다.");
 						} else {
 							// 장바구니 테이블의 레코드 삭제 실패
-							System.out.println("[ " + bmpCart.getbId() + " ] 도서의 장바구니 삭제에 실패하였습니다.");
+							System.out.println("[" + bmpCart.getbId() + "] 도서의 장바구니 삭제에 실패하였습니다.");
 						}
 						
 					} else {
@@ -364,7 +387,9 @@ public class BMPServiceImpl implements BMPService {
 	}
 
 	@Override
-	// 영수증 출력
+	/**
+	 * 영수증 출력
+	 */
 	public void menuCartBill() {
 		// 장바구니에 고객의 데이터가 존재 할 경우
 		if(cartRepository.getCount(customer.getcId()) != 0 ) {
@@ -424,7 +449,10 @@ public class BMPServiceImpl implements BMPService {
 		}
 	}
 	
-	// 장바구니 목록 표시
+	/**
+	 * 장바구니 목록 표시
+	 * @param list 장바구니 테이블 목록
+	 */
 	private void showCartItemList(List<BMPCartVO>list) {
 		System.out.println("장바구니 상품 목록 : ");
 		System.out.println("---------------------------------");
@@ -440,7 +468,9 @@ public class BMPServiceImpl implements BMPService {
 	}
 
 	@Override
-	// 종료
+	/**
+	 * 종료
+	 */
 	public void menuExit() {
 		customerRepository.close();
 		booksRepository.close();
@@ -448,4 +478,209 @@ public class BMPServiceImpl implements BMPService {
 		System.exit(0);
 	}
 	
+	@Override
+	/**
+	 * 도서 등록(관리자 전용)
+	 */
+	public void menuBookAddItem() {
+		BMPBooksVO book = new BMPBooksVO();
+		
+		System.out.println("================ 도서 등록 ========================");
+		
+		// 도서 정보 입력
+		insertBook(book);
+	
+		// 도서 테이블에 레코드 등록
+		int result = booksRepository.insert(book);
+		
+		if(result != 0) {
+			System.out.println("도서 등록 완료");
+		} else {
+			System.out.println("도서 등록 실패");
+		}
+	}
+	
+	@Override
+	/**
+	 * 도서 삭제(관리자 전용)
+	 */
+	public void menuBookRemoveItem() {
+		List<BMPBooksVO> list = new ArrayList<BMPBooksVO>();
+		boolean flag = true;
+		int count = 0;
+		
+		System.out.println("================ 도서 삭제 ========================");
+		// 도서 테이블의 정보 취득
+		list = booksRepository.findAll();
+		
+		System.out.println("도서 상품 목록 : ");
+		System.out.println("---------------------------------");
+		
+		// 도서 테이블 정보 표시
+		for(BMPBooksVO bmpBooks : list) {
+			System.out.print(bmpBooks.getbId() + " | ");
+			System.out.print(bmpBooks.getbTitle() + " | ");
+			System.out.print(bmpBooks.getbPrice() + " | ");
+			System.out.print(bmpBooks.getbAuthor() + " | ");
+			System.out.print(bmpBooks.getbSubTitle() + " | ");
+			System.out.print(bmpBooks.getbGroup() + " | ");
+			System.out.print(bmpBooks.getbDate() + " | ");
+			System.out.println();
+		}
+		
+		while(flag) {
+			count++;
+			if(count > 5) {
+				System.out.println("5회이상 틀렸습니다. 초기화면으로 돌아갑니다.");
+				break;
+			}
+			
+			System.out.print("삭제할 도서ID를 입력해주세요. : ");
+			String bid = scan.next();
+			
+			for(BMPBooksVO bmpBooks : list) {
+				// 입력한 도서 ID가 존재할경우
+				if(bmpBooks.getbId().equals(bid)) {
+	
+					System.out.print("[" + bid + "] 도서를 삭제 하시겠습니까? (Y / N) : ");
+					String check = scan.next();
+					
+					// Y 또는 y를 입력했을 경우
+					if(check.equals("Y") || check.equals("y")) {
+						// 장바구니 테이블에서 해당 도서정보 삭제
+						int result = booksRepository.remove(bid);
+						
+						// 도서 삭제에 성공했을경우
+						if(result != 0) {
+							System.out.println("["+ bid + "] 도서를 삭제했습니다.");
+						} else {
+							System.out.println("["+ bid + "] 도서 삭제에 실패했습니다.");
+						}
+
+					} else {
+						System.out.println("도서 삭제를 취소합니다.");
+					}
+					// 반복 종료
+					flag = false;
+					break;
+				}
+			}
+			// 입력한 값이 도서 테이블에 존재하지 않을경우
+			if(flag) {
+				System.out.println("입력한 도서정보가 존재하지 않습니다.");
+			}
+		}
+	}
+	@Override
+	/**
+	 * 도서 삭제(관리자 전용)
+	 */
+	public void menuBookUpdateItem() {
+		List<BMPBooksVO> list = new ArrayList<BMPBooksVO>();
+		boolean flag = true;
+		int count = 0;
+		
+		System.out.println("================ 도서 수정 ========================");
+		// 도서 테이블의 정보 취득
+		list = booksRepository.findAll();
+		
+		System.out.println("도서 상품 목록 : ");
+		System.out.println("---------------------------------");
+		
+		// 도서 테이블 정보 표시
+		for(BMPBooksVO bmpBooks : list) {
+			System.out.print(bmpBooks.getbId() + " | ");
+			System.out.print(bmpBooks.getbTitle() + " | ");
+			System.out.print(bmpBooks.getbPrice() + " | ");
+			System.out.print(bmpBooks.getbAuthor() + " | ");
+			System.out.print(bmpBooks.getbSubTitle() + " | ");
+			System.out.print(bmpBooks.getbGroup() + " | ");
+			System.out.print(bmpBooks.getbDate() + " | ");
+			System.out.println();
+		}
+		
+		while(flag) {
+			count++;
+			if(count > 5) {
+				System.out.println("5회이상 틀렸습니다. 초기화면으로 돌아갑니다.");
+				break;
+			}
+			
+			System.out.print("수정할 도서ID를 입력해주세요. : ");
+			String bid = scan.next();
+			
+			for(BMPBooksVO bmpBooks : list) {
+				// 입력한 도서 ID가 존재할경우
+				if(bmpBooks.getbId().equals(bid)) {
+	
+					System.out.print("[" + bid + "] 도서를 수정 하시겠습니까? (Y / N) : ");
+					String check = scan.next();
+					
+					// Y 또는 y를 입력했을 경우
+					if(check.equals("Y") || check.equals("y")) {
+						// 도서 정보 입력
+						insertBook(bmpBooks);
+						
+						// 도서 정보 수정
+						int result = booksRepository.update(bmpBooks);
+						
+						// 도서 삭제에 성공했을경우
+						if(result != 0) {
+							System.out.println("["+ bid + "] 도서를 수정했습니다.");
+						} else {
+							System.out.println("["+ bid + "] 도서 수정에 실패했습니다.");
+						}
+						
+					} else {
+						System.out.println("도서 수정을 취소합니다.");
+					}
+					// 반복 종료
+					flag = false;
+					break;
+				}
+			}
+			// 입력한 값이 도서 테이블에 존재하지 않을경우
+			if(flag) {
+				System.out.println("입력한 도서정보가 존재하지 않습니다.");
+			}
+		}
+	}
+	
+	/**
+	 * 도서 정보 입력
+	 * @param book 도서 테이블 데이터
+	 */
+	public void insertBook(BMPBooksVO book) {
+		boolean flag = true;
+		// 도서명
+		System.out.print("도서명 입력 : ");
+		book.setbTitle(scan.next());
+		
+		// 가격
+		while(flag) {
+			System.out.print("가격 입력 : ");
+			// 숫자를 입력했을경우
+			if(scan.hasNextInt()) {
+				book.setbPrice(scan.nextInt());
+				// 반복 종료
+				flag = false;
+			} else {
+				System.out.println("숫자를 입력해주세요.");
+				scan.next();
+			}
+		}
+
+		// 저자명
+		System.out.print("저자명 입력 : ");
+		book.setbAuthor(scan.next());
+		
+		// 부제목
+		System.out.print("부제목 입력 : ");
+		scan.nextLine();
+		book.setbSubTitle(scan.nextLine());
+		
+		// 도서그룹
+		System.out.print("도서 그룹 입력 : ");
+		book.setbGroup(scan.next());
+	}
 }

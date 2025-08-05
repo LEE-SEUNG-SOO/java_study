@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chapter21_mini_project.VO.BMPCartVO;
-import chapter21_mini_project.bookinterface.BookInterface;
 import db.DBConn;
 
 public class BMPCartDAO extends DBConn implements BookInterface<BMPCartVO>{
@@ -97,6 +96,7 @@ public class BMPCartDAO extends DBConn implements BookInterface<BMPCartVO>{
 	}
 
 	@Override
+	// 장바구니의 데이터 확인
 	public int getCount(String cid) {
 		int result = 0;
 		
