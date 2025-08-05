@@ -34,7 +34,7 @@ public class BookMiniProjectSystem {
 		boolean flag = true;
 		
 		while(flag) {
-			System.out.print("당신의 이름을 입력하세요. : ");
+			System.out.print("이름을 입력하세요. : ");
 			name = scan.next();
 			
 			System.out.print("연락처를 입력하세요.(010-1234-5678) : ");
@@ -53,12 +53,11 @@ public class BookMiniProjectSystem {
 					String addr = scan.next();
 					
 					// 고객 테이블에 입력한 데이터 저장
-					int result = service.createAccount(name, phone, addr);
+					boolean result = service.createAccount(name, phone, addr);
 					
 					// insert 성공시
-					if(result != 0) {
+					if(result) {
 						flag = false;
-						scan.next();
 					}
 				} else {
 					System.out.println("이름과 연락처를 다시 입력해주세요.");
@@ -85,7 +84,6 @@ public class BookMiniProjectSystem {
 	
 	public void selectMenu() {
 		int selectMenu = 0;
-		
 		System.out.print("메뉴 번호를 선택해주세요. : ");
 				
 		if(scan.hasNextInt()) {

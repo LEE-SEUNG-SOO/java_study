@@ -37,8 +37,9 @@ public class BMPServiceImpl implements BMPService {
 	
 	// Method
 	// 계정 생성
-	public int createAccount(String name, String phone, String addr) {
+	public boolean createAccount(String name, String phone, String addr) {
 		int result = 0;
+		boolean flag = false;
 		customerRepository = new BMPCustomerDAO();
 		// 계정 정보 설정
 		customer.setcName(name);
@@ -51,16 +52,18 @@ public class BMPServiceImpl implements BMPService {
 		if(result !=0) {
 			System.out.println("회원가입에 성공했습니다.");
 			// 로그인
-			login(name, phone);
+			flag = login(name, phone);
 			
-			if(customer.getcId() != null) {
+			if(flag) {
 				System.out.println("로그인 성공");
+			} else {
+				System.out.println("로그인 실패");
 			}
 		} else {
 			System.out.println("회원가입에 실패했습니다.");
 		}
 		
-		 return result;
+		 return flag;
 	}
 	
 	// 로그인
@@ -193,9 +196,9 @@ public class BMPServiceImpl implements BMPService {
 				
 				// 장바구니 추가 성공
 				if(result != 0) {
-					System.out.println(bmpCart.getbId() + " 도서가 장바구니에 추가되었습니다.");
+					System.out.println("[ " + bmpCart.getbId() + " ] 도서가 장바구니에 추가되었습니다.");
 				} else {
-					System.out.println(bmpCart.getbId() + " 도서의 장바구니 추가가 실패하였습니다.");
+					System.out.println("[ " + bmpCart.getbId() + " ] 도서의 장바구니 추가가 실패하였습니다.");
 				}
 				
 				flag = false;
@@ -265,10 +268,22 @@ public class BMPServiceImpl implements BMPService {
 								// 수정된 카운트의 갯수가 0일 경우
 								if(bmpCart.getCount() == 0) {
 									// 도서 카트 테이블에서 삭제
-									cartRepository.remove(cid, bid);
+									int result = cartRepository.remove(cid, bid);
+									
+									if(result != 0) {										
+										System.out.println("[ " + bmpCart.getbId() + " ] 도서의 갯수가 0개 이므로 장바구니에서 삭제합니다.");
+									} else {
+										System.out.println("장바구니 수정에 실패했습니다.");
+									}
 								} else {
 									// 장바구니 테이블 갱신
-									cartRepository.update(bmpCart);
+									int result = cartRepository.update(bmpCart);
+									
+									if(result != 0) {										
+										System.out.println("[ " + bmpCart.getbId() + " ] 도서의 갯수를 [" + count + "]개 줄였습니다.");
+									} else {
+										System.out.println("장바구니 수정에 실패했습니다.");
+									}
 								}
 								// 도서 정보 수정 반복 중지
 								flag = false;
@@ -323,10 +338,10 @@ public class BMPServiceImpl implements BMPService {
 						
 						// 장바구니 테이블의 레코드 삭제 성공
 						if(result != 0) {
-							System.out.println(bmpCart.getbId() + " 도서가 장바구니에서 삭제되었습니다.");
+							System.out.println("[ " + bmpCart.getbId() + " ] 도서가 장바구니에서 삭제되었습니다.");
 						} else {
 							// 장바구니 테이블의 레코드 삭제 실패
-							System.out.println(bmpCart.getbId() + " 도서의 장바구니 삭제에 실패하였습니다.");
+							System.out.println("[ " + bmpCart.getbId() + " ] 도서의 장바구니 삭제에 실패하였습니다.");
 						}
 						
 					} else {
