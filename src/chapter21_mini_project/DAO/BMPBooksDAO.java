@@ -9,7 +9,11 @@ import db.DBConn;
 public class BMPBooksDAO extends DBConn implements BookInterface<BMPBooksVO>{
 
 	@Override
-	// 도서 등록
+	/**
+	 * 도서 등록
+	 * @param book 도서 정보
+	 * @return result 0 : 1
+	 */
 	public int insert(BMPBooksVO book) {
 		int result = 0;
 		
@@ -39,7 +43,11 @@ public class BMPBooksDAO extends DBConn implements BookInterface<BMPBooksVO>{
 	}
 
 	@Override
-	// 도서 수정
+	/**
+	 * 도서 수정
+	 * @param book 도서정보
+	 * @return result 0 : 1
+	 */
 	public int update(BMPBooksVO book) {
 		int result = 0;
 		// sql 베이스
@@ -70,7 +78,11 @@ public class BMPBooksDAO extends DBConn implements BookInterface<BMPBooksVO>{
 	}
 
 	@Override
-	// 도서 삭제
+	/**
+	 * 도서 삭제
+	 * @param bid 도서번호
+	 * @return result 0 : 1
+	 */
 	public int remove(String bid) {
 		int result = 0;
 		// sql 베이스
@@ -101,7 +113,10 @@ public class BMPBooksDAO extends DBConn implements BookInterface<BMPBooksVO>{
 	}
 
 	@Override
-	// 도서 목록 조회
+	/**
+	 * 도서 목록 조회
+	 * @return list 도서테이블의 전 레코드
+	 */
 	public List<BMPBooksVO> findAll() {
 		List<BMPBooksVO> list = new ArrayList<BMPBooksVO>();
 		

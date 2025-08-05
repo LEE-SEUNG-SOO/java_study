@@ -9,7 +9,12 @@ public class BMPCustomerDAO extends DBConn
 	implements BookInterface<BMPCustomerVO> {
 	
 	@Override
-	// 로그인(고객 정보 확인)
+	/**
+	 * 로그인(고객 정보 확인)
+	 * @param name 이름
+	 * @param phone 폰번호
+	 * @return customer 고객정보
+	 */
 	public BMPCustomerVO find(String name, String phone) {
 		BMPCustomerVO customer = new BMPCustomerVO();
 		// sql 베이스
@@ -19,7 +24,6 @@ public class BMPCustomerDAO extends DBConn
 					WHERE cname = ?
 					AND cphone = ?
 				""";
-		
 		// sql 설정
 		getPreparedStatement(sql);
 		

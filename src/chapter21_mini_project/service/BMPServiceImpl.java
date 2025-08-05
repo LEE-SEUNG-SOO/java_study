@@ -9,6 +9,7 @@ import java.util.Scanner;
 import chapter21_mini_project.DAO.BMPBooksDAO;
 import chapter21_mini_project.DAO.BMPCartDAO;
 import chapter21_mini_project.DAO.BMPCustomerDAO;
+import chapter21_mini_project.DAO.BookInterface;
 import chapter21_mini_project.VO.BMPBooksVO;
 import chapter21_mini_project.VO.BMPCartVO;
 import chapter21_mini_project.VO.BMPCustomerVO;
@@ -18,9 +19,11 @@ public class BMPServiceImpl implements BMPService {
 	// Field
 	Scanner scan;
 	BookMiniProjectSystem bms;
-	BMPCustomerDAO customerRepository;
-	BMPBooksDAO booksRepository;
-	BMPCartDAO cartRepository;
+	// repository 선언
+	BookInterface<BMPCustomerVO> customerRepository;
+	BookInterface<BMPBooksVO> booksRepository;
+	BookInterface<BMPCartVO> cartRepository;
+	// 고객 정보 보존
 	BMPCustomerVO customer;
 		
 	// Construct

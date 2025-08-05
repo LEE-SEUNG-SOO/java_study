@@ -9,7 +9,11 @@ import db.DBConn;
 public class BMPCartDAO extends DBConn implements BookInterface<BMPCartVO>{
 
 	@Override
-	// 장바구니 도서 정보 추가
+	/**
+	 * 장바구니 도서 정보 추가
+	 * @param bmpCart 도서 정보
+	 * @return result 0 : 1
+	 */
 	public int insert(BMPCartVO bmpCart) {
 		int result = 0;
 		
@@ -38,7 +42,11 @@ public class BMPCartDAO extends DBConn implements BookInterface<BMPCartVO>{
 	}
 
 	@Override
-	// 장바구니 도서 정보 수정
+	/**
+	 * 장바구니 도서 정보 수정
+	 * @param bmpCart 도서 정보
+	 * @return 0 : 1
+	 */
 	public int update(BMPCartVO bmpCart) {
 		int result = 0;
 		
@@ -69,7 +77,12 @@ public class BMPCartDAO extends DBConn implements BookInterface<BMPCartVO>{
 	}
 
 	@Override
-	// 장바구니 도서 번호로 삭제
+	/**
+	 * 장바구니 도서 번호로 삭제
+	 * @param cid 고객번호
+	 * @param bid 도서번호
+	 * @return result 0 : 1
+	 */
 	public int remove(String cid, String bid) {
 		int result = 0;
 		// sql 베이스
@@ -96,7 +109,11 @@ public class BMPCartDAO extends DBConn implements BookInterface<BMPCartVO>{
 	}
 
 	@Override
-	// 장바구니의 데이터 확인
+	/**
+	 * 장바구니의 데이터 확인
+	 * @param cid 고객번호
+	 * @return result 고객번호의 장바구니 테이블 카운트수
+	 */
 	public int getCount(String cid) {
 		int result = 0;
 		
@@ -128,7 +145,11 @@ public class BMPCartDAO extends DBConn implements BookInterface<BMPCartVO>{
 	}
 
 	@Override
-	// 장바구니 정보 확인
+	/**
+	 * 장바구니 정보 확인
+	 * @param cid 고객번호
+	 * @return list 고객번호에 맞는 장바구니 레코드리스트
+	 */
 	public List<BMPCartVO> findAll(String cid) {
 		List<BMPCartVO> list = new ArrayList<BMPCartVO>();
 		
@@ -167,7 +188,11 @@ public class BMPCartDAO extends DBConn implements BookInterface<BMPCartVO>{
 
 
 	@Override
-	// 장바구니 비우기
+	/**
+	 * 장바구니 비우기
+	 * @param cid 고객번호
+	 * @return result 0 : 1
+	 */
 	public int remove(String cid) {
 		int result = 0;
 		
@@ -193,7 +218,12 @@ public class BMPCartDAO extends DBConn implements BookInterface<BMPCartVO>{
 	}
 	
 	@Override
-	// 도서 번호로 장바구니 검색
+	/**
+	 * 도서 번호로 장바구니 검색
+	 * @param cid 고객번호
+	 * @param bid 도서번호
+	 * @return bmpCart 고객번호와 도서번호에 맞는 장바구니 레코드 
+	 */
 	public BMPCartVO find(String cid, String bid) {
 		BMPCartVO bmpCart  = new BMPCartVO();
 		
